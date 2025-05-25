@@ -5,6 +5,7 @@ import QuestBoard from '../components/QuestBoard';
 import BuffDebuffStatus from '../components/BuffDebuffStatus';
 import Shop from '../components/Shop';
 import StatsPanel from '../components/StatsPanel';
+import Settings from '../components/Settings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Index = () => {
@@ -22,9 +23,9 @@ const Index = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-orbitron font-black hologram-text animate-glow">
-                RPG LIFE
+                BECOME A PLAYER
               </h1>
-              <p className="text-muted-foreground mt-1">Level up your real life</p>
+              <p className="text-muted-foreground mt-1">Tingkatkan Diri Dengan Quest</p>
             </div>
             <BuffDebuffStatus />
           </div>
@@ -40,11 +41,12 @@ const Index = () => {
           {/* Main Content */}
           <div className="lg:col-span-2">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-4 glass">
-                <TabsTrigger value="quests" className="font-orbitron">Quests</TabsTrigger>
-                <TabsTrigger value="shop" className="font-orbitron">Shop</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-5 glass">
+                <TabsTrigger value="quests" className="font-orbitron">Quest</TabsTrigger>
+                <TabsTrigger value="shop" className="font-orbitron">Toko</TabsTrigger>
                 <TabsTrigger value="stats" className="font-orbitron">Stats</TabsTrigger>
-                <TabsTrigger value="achievements" className="font-orbitron">Achievements</TabsTrigger>
+                <TabsTrigger value="achievements" className="font-orbitron">Prestasi</TabsTrigger>
+                <TabsTrigger value="settings" className="font-orbitron">Pengaturan</TabsTrigger>
               </TabsList>
 
               <TabsContent value="quests" className="mt-6">
@@ -61,9 +63,13 @@ const Index = () => {
 
               <TabsContent value="achievements" className="mt-6">
                 <div className="glass rounded-lg p-6">
-                  <h3 className="text-xl font-orbitron font-bold mb-4">Achievements</h3>
-                  <p className="text-muted-foreground">Achievement system coming soon...</p>
+                  <h3 className="text-xl font-orbitron font-bold mb-4">Sistem Prestasi</h3>
+                  <p className="text-muted-foreground">Sistem prestasi akan segera hadir...</p>
                 </div>
+              </TabsContent>
+
+              <TabsContent value="settings" className="mt-6">
+                <Settings />
               </TabsContent>
             </Tabs>
           </div>
@@ -71,27 +77,27 @@ const Index = () => {
           {/* Right Sidebar - Quick Stats */}
           <div className="lg:col-span-1">
             <div className="glass rounded-lg p-4 mb-4">
-              <h3 className="font-orbitron font-bold mb-3">Quick Stats</h3>
+              <h3 className="font-orbitron font-bold mb-3">Statistik Cepat</h3>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-sm">Today's XP</span>
+                  <span className="text-sm">XP Hari Ini</span>
                   <span className="text-primary font-bold">+250</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">Gold Earned</span>
+                  <span className="text-sm">Gold Diperoleh</span>
                   <span className="text-yellow-400 font-bold">+150</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm">Quests Done</span>
+                  <span className="text-sm">Quest Selesai</span>
                   <span className="text-green-400 font-bold">5/8</span>
                 </div>
               </div>
             </div>
 
             <div className="glass rounded-lg p-4">
-              <h3 className="font-orbitron font-bold mb-3">Daily Summary</h3>
+              <h3 className="font-orbitron font-bold mb-3">Ringkasan Harian</h3>
               <div className="text-sm text-muted-foreground">
-                <p>Great progress today! You're on track to reach your weekly goals.</p>
+                <p>Progress yang bagus hari ini! Kamu berada di jalur yang tepat untuk mencapai target mingguan.</p>
               </div>
             </div>
           </div>

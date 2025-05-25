@@ -4,21 +4,21 @@ import { Badge } from '@/components/ui/badge';
 
 const BuffDebuffStatus = () => {
   const activeBuffs = [
-    { name: 'Focused', duration: '2h 30m', type: 'buff' },
+    { name: 'Fokus', duration: '2j 30m', type: 'buff' },
     { name: 'Momentum', duration: '45m', type: 'buff' }
   ];
 
   const activeDebuffs = [
-    { name: 'Fatigued', duration: '1h 15m', type: 'debuff' }
+    { name: 'Lelah', duration: '1j 15m', type: 'debuff' }
   ];
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 flex-wrap">
       {activeBuffs.map((buff, index) => (
         <Badge 
           key={index}
           variant="outline" 
-          className="buff-glow border-blue-400/50 text-blue-300 font-orbitron"
+          className="buff-glow border-blue-400/50 text-blue-300 font-orbitron text-xs"
         >
           ↑ {buff.name} ({buff.duration})
         </Badge>
@@ -28,15 +28,15 @@ const BuffDebuffStatus = () => {
         <Badge 
           key={index}
           variant="outline" 
-          className="debuff-glow border-red-400/50 text-red-300 font-orbitron"
+          className="debuff-glow border-red-400/50 text-red-300 font-orbitron text-xs"
         >
           ↓ {debuff.name} ({debuff.duration})
         </Badge>
       ))}
       
       {activeBuffs.length === 0 && activeDebuffs.length === 0 && (
-        <Badge variant="outline" className="text-muted-foreground font-orbitron">
-          No active effects
+        <Badge variant="outline" className="text-muted-foreground font-orbitron text-xs">
+          Tidak ada efek aktif
         </Badge>
       )}
     </div>

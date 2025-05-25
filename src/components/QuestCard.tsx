@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Star } from 'lucide-react';
+import { playSound, showNotification } from '../utils/gameUtils';
 
 interface Quest {
   id: number;
@@ -12,7 +13,7 @@ interface Quest {
   goldReward: number;
   timeLeft: string;
   status: 'active' | 'completed' | 'expired';
-  difficulty: 'Easy' | 'Medium' | 'Hard';
+  difficulty: 'Mudah' | 'Sedang' | 'Sulit';
   statBonus: string;
 }
 
@@ -24,9 +25,9 @@ interface QuestCardProps {
 const QuestCard: React.FC<QuestCardProps> = ({ quest, type }) => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Easy': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'Medium': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'Hard': return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'Mudah': return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'Sedang': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'Sulit': return 'bg-red-500/20 text-red-400 border-red-500/30';
       default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
   };
@@ -41,20 +42,37 @@ const QuestCard: React.FC<QuestCardProps> = ({ quest, type }) => {
     }
   };
 
+  const getTypeLabel = (type: string) => {
+    switch (type) {
+      case 'daily': return 'HARIAN';
+      case 'weekly': return 'MINGGUAN';
+      case 'main': return 'UTAMA';
+      case 'event': return 'EVENT';
+      default: return type.toUpperCase();
+    }
+  };
+
   const isCompleted = quest.status === 'completed';
   const isExpired = quest.status === 'expired';
+
+  const handleStartQuest = () => {
+    if (!isCompleted && !isExpired) {
+      playSound('questStart');
+      showNotification('Quest dimulai!', `Kamu telah memulai quest: ${quest.title}`);
+    }
+  };
 
   return (
     <div className={`quest-card ${isCompleted ? 'opacity-75' : ''} ${isExpired ? 'opacity-50 border-red-500/50' : ''}`}>
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
             <h4 className="font-orbitron font-bold text-lg">{quest.title}</h4>
             <Badge variant="outline" className={getDifficultyColor(quest.difficulty)}>
               {quest.difficulty}
             </Badge>
             <Badge variant="secondary" className={getTypeColor(type)}>
-              {type.toUpperCase()}
+              {getTypeLabel(type)}
             </Badge>
           </div>
           <p className="text-muted-foreground text-sm mb-2">{quest.description}</p>
@@ -74,7 +92,7 @@ const QuestCard: React.FC<QuestCardProps> = ({ quest, type }) => {
           </div>
         </div>
         
-        {quest.timeLeft !== "No limit" && (
+        {quest.timeLeft !== "Tanpa batas" && (
           <div className="flex items-center gap-1 text-sm">
             <Clock className="w-4 h-4" />
             <span className={isExpired ? 'text-red-400' : 'text-muted-foreground'}>
@@ -85,7 +103,8 @@ const QuestCard: React.FC<QuestCardProps> = ({ quest, type }) => {
       </div>
 
       <Button 
-        className={`w-full font-orbitron ${
+        onClick={handleStartQuest}
+        className={`w-full font-orbitron text-sm py-2 ${
           isCompleted 
             ? 'bg-green-600 hover:bg-green-700' 
             : isExpired 
@@ -94,7 +113,7 @@ const QuestCard: React.FC<QuestCardProps> = ({ quest, type }) => {
         }`}
         disabled={isCompleted || isExpired}
       >
-        {isCompleted ? 'COMPLETED' : isExpired ? 'EXPIRED' : 'START QUEST'}
+        {isCompleted ? 'SELESAI' : isExpired ? 'KADALUARSA' : 'MULAI QUEST'}
       </Button>
     </div>
   );
