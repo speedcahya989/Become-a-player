@@ -2,6 +2,8 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 
 const CharacterProfile = () => {
   const playerData = {
@@ -22,6 +24,20 @@ const CharacterProfile = () => {
   };
 
   const xpPercentage = (playerData.xp / playerData.xpToNext) * 100;
+
+  // Prepare data for radar chart
+  const radarData = Object.entries(playerData.stats).map(([statName, value]) => ({
+    stat: statName,
+    value: value,
+    fullMark: 50
+  }));
+
+  const chartConfig = {
+    value: {
+      label: "Nilai Saat Ini",
+      color: "hsl(var(--primary))",
+    },
+  };
 
   return (
     <div className="glass rounded-lg p-6 space-y-6">
@@ -58,14 +74,47 @@ const CharacterProfile = () => {
         <span className="text-yellow-400 font-bold text-lg">{playerData.gold}</span>
       </div>
 
-      {/* Stats */}
+      {/* Stats Radar Chart */}
       <div className="space-y-3">
-        <h3 className="font-orbitron font-bold text-center">Character Stats</h3>
-        <div className="grid grid-cols-2 gap-3">
-          {Object.entries(playerData.stats).map(([stat, value]) => (
-            <div key={stat} className="bg-muted/30 rounded-lg p-3 text-center">
-              <div className="text-xs text-muted-foreground mb-1">{stat}</div>
-              <div className="text-lg font-bold text-primary">{value}</div>
+        <h3 className="font-orbitron font-bold text-center">Statistik Karakter</h3>
+        <div className="h-48">
+          <ChartContainer config={chartConfig}>
+            <RadarChart data={radarData}>
+              <PolarGrid className="stroke-border/20" />
+              <PolarAngleAxis 
+                dataKey="stat" 
+                className="text-foreground font-orbitron font-bold text-xs"
+                tick={{ fill: 'hsl(var(--foreground))', fontSize: 10 }}
+              />
+              <PolarRadiusAxis 
+                angle={0} 
+                domain={[0, 50]} 
+                tick={false}
+                className="text-muted-foreground"
+              />
+              <Radar
+                name="Nilai"
+                dataKey="value"
+                stroke="hsl(var(--primary))"
+                fill="hsl(var(--primary))"
+                fillOpacity={0.2}
+                strokeWidth={1.5}
+                dot={{ fill: 'hsl(var(--primary))', strokeWidth: 1, r: 2 }}
+              />
+              <ChartTooltip 
+                content={<ChartTooltipContent />}
+                formatter={(value) => [`${value}/50`, 'Nilai']}
+              />
+            </RadarChart>
+          </ChartContainer>
+        </div>
+        
+        {/* Stats Summary - Compact */}
+        <div className="grid grid-cols-5 gap-1 text-xs">
+          {Object.entries(playerData.stats).map(([statName, value]) => (
+            <div key={statName} className="text-center">
+              <div className="font-orbitron font-bold text-primary text-xs">{statName}</div>
+              <div className="text-xs">{value}</div>
             </div>
           ))}
         </div>
@@ -73,7 +122,7 @@ const CharacterProfile = () => {
 
       {/* Level Progress Indicator */}
       <div className="text-center">
-        <div className="text-xs text-muted-foreground mb-2">Next Level Progress</div>
+        <div className="text-xs text-muted-foreground mb-2">Progress Level Berikutnya</div>
         <div className="text-2xl font-orbitron font-bold hologram-text">
           {Math.round(xpPercentage)}%
         </div>
