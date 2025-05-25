@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import QuestCard from './QuestCard';
@@ -13,8 +12,8 @@ const QuestBoard = () => {
         xpReward: 50,
         goldReward: 25,
         timeLeft: "6h 30m",
-        status: "active",
-        difficulty: "Easy",
+        status: "active" as const,
+        difficulty: "Easy" as const,
         statBonus: "STR +1"
       },
       {
@@ -24,8 +23,8 @@ const QuestBoard = () => {
         xpReward: 40,
         goldReward: 20,
         timeLeft: "12h 15m",
-        status: "active",
-        difficulty: "Easy",
+        status: "active" as const,
+        difficulty: "Easy" as const,
         statBonus: "INT +1"
       },
       {
@@ -35,8 +34,8 @@ const QuestBoard = () => {
         xpReward: 35,
         goldReward: 15,
         timeLeft: "8h 45m",
-        status: "completed",
-        difficulty: "Easy",
+        status: "completed" as const,
+        difficulty: "Easy" as const,
         statBonus: "WIS +1"
       }
     ],
@@ -48,8 +47,8 @@ const QuestBoard = () => {
         xpReward: 200,
         goldReward: 100,
         timeLeft: "3d 12h",
-        status: "active",
-        difficulty: "Medium",
+        status: "active" as const,
+        difficulty: "Medium" as const,
         statBonus: "INT +3"
       },
       {
@@ -59,8 +58,8 @@ const QuestBoard = () => {
         xpReward: 150,
         goldReward: 75,
         timeLeft: "5d 8h",
-        status: "active",
-        difficulty: "Medium",
+        status: "active" as const,
+        difficulty: "Medium" as const,
         statBonus: "CHA +2"
       }
     ],
@@ -72,8 +71,8 @@ const QuestBoard = () => {
         xpReward: 1000,
         goldReward: 500,
         timeLeft: "No limit",
-        status: "active",
-        difficulty: "Hard",
+        status: "active" as const,
+        difficulty: "Hard" as const,
         statBonus: "INT +10, DEX +5"
       }
     ],
@@ -85,8 +84,8 @@ const QuestBoard = () => {
         xpReward: 300,
         goldReward: 150,
         timeLeft: "2d 6h",
-        status: "active",
-        difficulty: "Medium",
+        status: "active" as const,
+        difficulty: "Medium" as const,
         statBonus: "WIS +5"
       }
     ]
