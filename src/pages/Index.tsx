@@ -6,7 +6,10 @@ import BuffDebuffStatus from '../components/BuffDebuffStatus';
 import ShopTabs from '../components/ShopTabs';
 import StatsPanel from '../components/StatsPanel';
 import Settings from '../components/Settings';
-import QuestSettings from '../components/QuestSettings';
+import ShopSettings from '../components/ShopSettings';
+import AchievementSettings from '../components/AchievementSettings';
+import ProgressTracker from '../components/ProgressTracker';
+import BuffDebuffList from '../components/BuffDebuffList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Index = () => {
@@ -47,7 +50,7 @@ const Index = () => {
                 <TabsTrigger value="shop" className="font-orbitron text-xs">Toko</TabsTrigger>
                 <TabsTrigger value="stats" className="font-orbitron text-xs">Stats</TabsTrigger>
                 <TabsTrigger value="achievements" className="font-orbitron text-xs">Prestasi</TabsTrigger>
-                <TabsTrigger value="quest-settings" className="font-orbitron text-xs">Pengaturan</TabsTrigger>
+                <TabsTrigger value="buffs" className="font-orbitron text-xs">Buff/Debuff</TabsTrigger>
                 <TabsTrigger value="settings" className="font-orbitron text-xs">Setting</TabsTrigger>
               </TabsList>
 
@@ -56,22 +59,55 @@ const Index = () => {
               </TabsContent>
 
               <TabsContent value="shop" className="mt-6">
-                <ShopTabs />
+                <Tabs defaultValue="shop" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2 glass mb-4">
+                    <TabsTrigger value="shop" className="font-orbitron">Toko</TabsTrigger>
+                    <TabsTrigger value="shop-settings" className="font-orbitron">Pengaturan Toko</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="shop">
+                    <ShopTabs />
+                  </TabsContent>
+                  <TabsContent value="shop-settings">
+                    <ShopSettings />
+                  </TabsContent>
+                </Tabs>
               </TabsContent>
 
               <TabsContent value="stats" className="mt-6">
-                <StatsPanel />
+                <Tabs defaultValue="stats" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2 glass mb-4">
+                    <TabsTrigger value="stats" className="font-orbitron">Statistik</TabsTrigger>
+                    <TabsTrigger value="progress" className="font-orbitron">Progress Tracker</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="stats">
+                    <StatsPanel />
+                  </TabsContent>
+                  <TabsContent value="progress">
+                    <ProgressTracker />
+                  </TabsContent>
+                </Tabs>
               </TabsContent>
 
               <TabsContent value="achievements" className="mt-6">
-                <div className="glass rounded-lg p-6">
-                  <h3 className="text-xl font-orbitron font-bold mb-4">Sistem Prestasi</h3>
-                  <p className="text-muted-foreground">Sistem prestasi akan segera hadir...</p>
-                </div>
+                <Tabs defaultValue="achievements" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2 glass mb-4">
+                    <TabsTrigger value="achievements" className="font-orbitron">Prestasi</TabsTrigger>
+                    <TabsTrigger value="achievement-settings" className="font-orbitron">Pengaturan Prestasi</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="achievements">
+                    <div className="glass rounded-lg p-6">
+                      <h3 className="text-xl font-orbitron font-bold mb-4">Sistem Prestasi</h3>
+                      <p className="text-muted-foreground">Sistem prestasi akan segera hadir...</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="achievement-settings">
+                    <AchievementSettings />
+                  </TabsContent>
+                </Tabs>
               </TabsContent>
 
-              <TabsContent value="quest-settings" className="mt-6">
-                <QuestSettings />
+              <TabsContent value="buffs" className="mt-6">
+                <BuffDebuffList />
               </TabsContent>
 
               <TabsContent value="settings" className="mt-6">
