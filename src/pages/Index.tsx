@@ -11,9 +11,11 @@ import AchievementSettings from '../components/AchievementSettings';
 import ProgressTracker from '../components/ProgressTracker';
 import BuffDebuffList from '../components/BuffDebuffList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('quests');
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -27,9 +29,9 @@ const Index = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-orbitron font-black hologram-text animate-glow">
-                BECOME A PLAYER
+                {t('app.title')}
               </h1>
-              <p className="text-muted-foreground mt-1">Tingkatkan Diri Dengan Quest</p>
+              <p className="text-muted-foreground mt-1">{t('app.subtitle')}</p>
             </div>
             <BuffDebuffStatus />
           </div>
@@ -46,12 +48,12 @@ const Index = () => {
           <div className="lg:col-span-2">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full grid-cols-6 glass">
-                <TabsTrigger value="quests" className="font-orbitron text-xs">Quest</TabsTrigger>
-                <TabsTrigger value="shop" className="font-orbitron text-xs">Toko</TabsTrigger>
-                <TabsTrigger value="stats" className="font-orbitron text-xs">Stats</TabsTrigger>
-                <TabsTrigger value="achievements" className="font-orbitron text-xs">Prestasi</TabsTrigger>
-                <TabsTrigger value="buffs" className="font-orbitron text-xs">Buff/Debuff</TabsTrigger>
-                <TabsTrigger value="settings" className="font-orbitron text-xs">Setting</TabsTrigger>
+                <TabsTrigger value="quests" className="font-orbitron text-xs">{t('tab.quest')}</TabsTrigger>
+                <TabsTrigger value="shop" className="font-orbitron text-xs">{t('tab.shop')}</TabsTrigger>
+                <TabsTrigger value="stats" className="font-orbitron text-xs">{t('tab.stats')}</TabsTrigger>
+                <TabsTrigger value="achievements" className="font-orbitron text-xs">{t('tab.achievements')}</TabsTrigger>
+                <TabsTrigger value="buffs" className="font-orbitron text-xs">{t('tab.buffs')}</TabsTrigger>
+                <TabsTrigger value="settings" className="font-orbitron text-xs">{t('tab.settings')}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="quests" className="mt-6">
