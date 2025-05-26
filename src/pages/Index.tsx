@@ -6,7 +6,6 @@ import BuffDebuffStatus from '../components/BuffDebuffStatus';
 import ShopTabs from '../components/ShopTabs';
 import StatsPanel from '../components/StatsPanel';
 import Settings from '../components/Settings';
-import ShopSettings from '../components/ShopSettings';
 import AchievementSettings from '../components/AchievementSettings';
 import ProgressTracker from '../components/ProgressTracker';
 import BuffDebuffList from '../components/BuffDebuffList';
@@ -61,25 +60,14 @@ const Index = () => {
               </TabsContent>
 
               <TabsContent value="shop" className="mt-6">
-                <Tabs defaultValue="shop" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2 glass mb-4">
-                    <TabsTrigger value="shop" className="font-orbitron">Toko</TabsTrigger>
-                    <TabsTrigger value="shop-settings" className="font-orbitron">Pengaturan Toko</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="shop">
-                    <ShopTabs />
-                  </TabsContent>
-                  <TabsContent value="shop-settings">
-                    <ShopSettings />
-                  </TabsContent>
-                </Tabs>
+                <ShopTabs />
               </TabsContent>
 
               <TabsContent value="stats" className="mt-6">
                 <Tabs defaultValue="stats" className="w-full">
                   <TabsList className="grid w-full grid-cols-2 glass mb-4">
-                    <TabsTrigger value="stats" className="font-orbitron">Statistik</TabsTrigger>
-                    <TabsTrigger value="progress" className="font-orbitron">Progress Tracker</TabsTrigger>
+                    <TabsTrigger value="stats" className="font-orbitron">{t('stats.title')}</TabsTrigger>
+                    <TabsTrigger value="progress" className="font-orbitron">{t('stats.progress')}</TabsTrigger>
                   </TabsList>
                   <TabsContent value="stats">
                     <StatsPanel />

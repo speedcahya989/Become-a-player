@@ -4,143 +4,148 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Zap, Shield, Flame, Snowflake, Heart, Brain, Clock, X } from 'lucide-react';
+import { Brain, Zap, Flame, Star, Clock, Shield, Frown, Timer, Heart, Snowflake, X } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const BuffDebuffList = () => {
+  const { t } = useLanguage();
+  
   const [activeEffects] = useState([
     {
       id: 1,
-      name: 'Motivasi Tinggi',
+      name: '🧠 Focused',
       type: 'buff',
-      description: 'Meningkatkan XP yang didapat dari quest sebesar 25%',
+      description: '+20% XP dari semua quest hari itu',
       duration: 1200,
       maxDuration: 3600,
-      effect: '+25% XP Gain',
-      icon: Zap,
+      effect: '+20% XP',
+      icon: Brain,
       color: 'text-blue-400'
     },
     {
       id: 2,
-      name: 'Fokus Mendalam',
+      name: '💪 Energetic',
       type: 'buff',
-      description: 'Mengurangi waktu pengerjaan quest sebesar 20%',
+      description: 'Tambahan +5 XP untuk semua quest selama 3 hari',
       duration: 2400,
       maxDuration: 3600,
-      effect: '-20% Quest Time',
-      icon: Brain,
-      color: 'text-purple-400'
-    },
-    {
-      id: 3,
-      name: 'Kelelahan',
-      type: 'debuff',
-      description: 'Mengurangi gold yang didapat sebesar 15%',
-      duration: 800,
-      maxDuration: 1800,
-      effect: '-15% Gold Gain',
-      icon: Clock,
-      color: 'text-red-400'
+      effect: '+5 XP',
+      icon: Zap,
+      color: 'text-green-400'
     }
   ]);
 
   const [allBuffsDebuffs] = useState([
+    // Buffs
     {
       id: 1,
-      name: 'Motivasi Tinggi',
+      name: '🧠 Focused',
       type: 'buff',
-      description: 'Meningkatkan XP yang didapat dari quest sebesar 25%',
-      effect: '+25% XP Gain',
-      icon: Zap,
+      description: '+20% XP dari semua quest hari itu',
+      effect: '+20% XP',
+      icon: Brain,
       color: 'text-blue-400',
       rarity: 'common'
     },
     {
       id: 2,
-      name: 'Fokus Mendalam',
+      name: '💪 Energetic',
       type: 'buff',
-      description: 'Mengurangi waktu pengerjaan quest sebesar 20%',
-      effect: '-20% Quest Time',
-      icon: Brain,
-      color: 'text-purple-400',
-      rarity: 'uncommon'
+      description: 'Tambahan +5 XP untuk semua quest selama 3 hari',
+      effect: '+5 XP',
+      icon: Zap,
+      color: 'text-green-400',
+      rarity: 'common'
     },
     {
       id: 3,
-      name: 'Semangat Berapi',
+      name: '🔥 Momentum',
       type: 'buff',
-      description: 'Meningkatkan chance critical success pada quest',
-      effect: '+30% Crit Chance',
+      description: 'XP dari quest dilipatgandakan 1.5x selama 1 hari',
+      effect: '1.5x XP',
       icon: Flame,
       color: 'text-orange-400',
       rarity: 'rare'
     },
     {
       id: 4,
-      name: 'Pelindung Mental',
+      name: '🌟 Lucky Streak',
       type: 'buff',
-      description: 'Mencegah debuff negatif selama 1 jam',
-      effect: 'Debuff Immunity',
-      icon: Shield,
-      color: 'text-green-400',
-      rarity: 'common'
+      description: 'Gold dari reward shop diskon 50% selama 2 hari',
+      effect: '50% Diskon',
+      icon: Star,
+      color: 'text-yellow-400',
+      rarity: 'rare'
     },
     {
       id: 5,
-      name: 'Healing Aura',
+      name: '🕒 Time Master',
       type: 'buff',
-      description: 'Menghilangkan semua debuff aktif',
-      effect: 'Remove All Debuffs',
-      icon: Heart,
-      color: 'text-pink-400',
+      description: 'Boleh mengubah deadline quest harian 1 kali tanpa penalti',
+      effect: 'Deadline Flex',
+      icon: Clock,
+      color: 'text-purple-400',
       rarity: 'uncommon'
     },
     {
       id: 6,
-      name: 'Time Freeze',
+      name: '🔒 Shielded',
       type: 'buff',
-      description: 'Quest tidak memiliki batas waktu selama 30 menit',
-      effect: 'No Time Limits',
-      icon: Snowflake,
+      description: 'Debuff tidak aktif selama 1 hari',
+      effect: 'Debuff Immunity',
+      icon: Shield,
       color: 'text-cyan-400',
-      rarity: 'rare'
+      rarity: 'uncommon'
     },
+    
+    // Debuffs
     {
       id: 7,
-      name: 'Kelelahan',
+      name: '😫 Fatigued',
       type: 'debuff',
-      description: 'Mengurangi gold yang didapat sebesar 15%',
-      effect: '-15% Gold Gain',
-      icon: Clock,
+      description: 'Tidak bisa ambil quest level tinggi (XP > 30)',
+      effect: 'Quest Limit',
+      icon: Timer,
       color: 'text-red-400',
       rarity: 'common'
     },
     {
       id: 8,
-      name: 'Stress Mental',
+      name: '⏳ Procrastinating',
       type: 'debuff',
-      description: 'Mengurangi XP yang didapat sebesar 20%',
-      effect: '-20% XP Gain',
-      icon: Brain,
+      description: 'Tidak bisa membuka quest baru',
+      effect: 'Quest Block',
+      icon: Clock,
       color: 'text-red-400',
       rarity: 'uncommon'
     },
     {
       id: 9,
-      name: 'Demotivasi',
+      name: '😞 Demotivated',
       type: 'debuff',
-      description: 'Meningkatkan waktu pengerjaan quest sebesar 30%',
-      effect: '+30% Quest Time',
-      icon: Clock,
+      description: 'Tidak boleh ke shop selama 3 hari',
+      effect: 'Shop Block',
+      icon: Frown,
       color: 'text-red-400',
       rarity: 'rare'
     },
     {
       id: 10,
-      name: 'Kebingungan',
+      name: '🚫 Blocked',
       type: 'debuff',
-      description: 'Mengurangi chance critical success pada quest',
-      effect: '-25% Crit Chance',
-      icon: Brain,
+      description: 'XP & gold berkurang 70% selama 1 hari',
+      effect: '-70% Rewards',
+      icon: X,
+      color: 'text-red-400',
+      rarity: 'rare'
+    },
+    {
+      id: 11,
+      name: '❄️ Frozen',
+      type: 'debuff',
+      description: 'Tidak bisa akses quest selama 1 hari',
+      effect: 'Quest Freeze',
+      icon: Snowflake,
       color: 'text-red-400',
       rarity: 'common'
     }
@@ -185,14 +190,14 @@ const BuffDebuffList = () => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-orbitron font-bold hologram-text mb-2">Buff & Debuff</h2>
-        <p className="text-muted-foreground">Kelola efek aktif dan pelajari semua efek yang tersedia</p>
+        <h2 className="text-3xl font-orbitron font-bold hologram-text mb-2">{t('buffs.title')}</h2>
+        <p className="text-muted-foreground">{t('buffs.subtitle')}</p>
       </div>
 
       {/* Active Effects */}
       <Card className="glass">
         <CardHeader>
-          <CardTitle className="font-orbitron">Efek Aktif</CardTitle>
+          <CardTitle className="font-orbitron">{t('buffs.active')}</CardTitle>
         </CardHeader>
         <CardContent>
           {activeEffects.length > 0 ? (
@@ -239,7 +244,7 @@ const BuffDebuffList = () => {
             </div>
           ) : (
             <div className="text-center py-8 text-muted-foreground">
-              <p>Tidak ada efek aktif saat ini</p>
+              <p>{t('buffs.none')}</p>
             </div>
           )}
         </CardContent>
@@ -248,7 +253,7 @@ const BuffDebuffList = () => {
       {/* All Buffs */}
       <Card className="glass">
         <CardHeader>
-          <CardTitle className="font-orbitron text-blue-400">Daftar Semua Buff</CardTitle>
+          <CardTitle className="font-orbitron text-blue-400">↑ {t('buffs.list')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
@@ -287,7 +292,7 @@ const BuffDebuffList = () => {
       {/* All Debuffs */}
       <Card className="glass">
         <CardHeader>
-          <CardTitle className="font-orbitron text-red-400">Daftar Semua Debuff</CardTitle>
+          <CardTitle className="font-orbitron text-red-400">↓ {t('buffs.debuffs')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
