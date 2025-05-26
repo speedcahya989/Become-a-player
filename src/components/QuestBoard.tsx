@@ -11,6 +11,101 @@ import { Plus, Edit2, Trash2, Settings } from 'lucide-react';
 import QuestCard from './QuestCard';
 
 const QuestBoard = () => {
+  const [defaultQuests, setDefaultQuests] = useState({
+    daily: [
+      {
+        id: 1,
+        title: "Olahraga Pagi",
+        description: "Selesaikan aktivitas fisik selama 30 menit",
+        xpReward: 50,
+        goldReward: 25,
+        timeLeft: "6j 30m",
+        status: "active" as const,
+        difficulty: "Mudah" as const,
+        statBonus: "STR +1",
+        isDefault: true
+      },
+      {
+        id: 2,
+        title: "Baca 20 Halaman",
+        description: "Baca minimal 20 halaman buku apapun",
+        xpReward: 40,
+        goldReward: 20,
+        timeLeft: "12j 15m",
+        status: "active" as const,
+        difficulty: "Mudah" as const,
+        statBonus: "INT +1",
+        isDefault: true
+      },
+      {
+        id: 3,
+        title: "Meditasi",
+        description: "10 menit meditasi mindfulness",
+        xpReward: 35,
+        goldReward: 15,
+        timeLeft: "8j 45m",
+        status: "completed" as const,
+        difficulty: "Mudah" as const,
+        statBonus: "WIS +1",
+        isDefault: true
+      }
+    ],
+    weekly: [
+      {
+        id: 4,
+        title: "Pelajari Skill Baru",
+        description: "Habiskan 3 jam mempelajari sesuatu yang baru",
+        xpReward: 200,
+        goldReward: 100,
+        timeLeft: "3h 12j",
+        status: "active" as const,
+        difficulty: "Sedang" as const,
+        statBonus: "INT +3",
+        isDefault: true
+      },
+      {
+        id: 5,
+        title: "Koneksi Sosial",
+        description: "Bercakap bermakna dengan 3 orang",
+        xpReward: 150,
+        goldReward: 75,
+        timeLeft: "5h 8j",
+        status: "active" as const,
+        difficulty: "Sedang" as const,
+        statBonus: "CHA +2",
+        isDefault: true
+      }
+    ],
+    main: [
+      {
+        id: 6,
+        title: "Kuasai Programming",
+        description: "Selesaikan kursus programming lanjutan",
+        xpReward: 1000,
+        goldReward: 500,
+        timeLeft: "Tanpa batas",
+        status: "active" as const,
+        difficulty: "Sulit" as const,
+        statBonus: "INT +10, DEX +5",
+        isDefault: true
+      }
+    ],
+    event: [
+      {
+        id: 7,
+        title: "Resolusi Tahun Baru",
+        description: "Tetapkan dan rencanakan tujuan untuk tahun ini",
+        xpReward: 300,
+        goldReward: 150,
+        timeLeft: "2h 6j",
+        status: "active" as const,
+        difficulty: "Sedang" as const,
+        statBonus: "WIS +5",
+        isDefault: true
+      }
+    ]
+  });
+
   const [customQuests, setCustomQuests] = useState<any[]>([]);
   const [isAddingQuest, setIsAddingQuest] = useState(false);
   const [editingQuest, setEditingQuest] = useState<any>(null);
@@ -24,94 +119,6 @@ const QuestBoard = () => {
     type: 'daily',
     duration: 30,
     expireAfter: 24
-  });
-
-  const [quests] = useState({
-    daily: [
-      {
-        id: 1,
-        title: "Olahraga Pagi",
-        description: "Selesaikan aktivitas fisik selama 30 menit",
-        xpReward: 50,
-        goldReward: 25,
-        timeLeft: "6j 30m",
-        status: "active" as const,
-        difficulty: "Mudah" as const,
-        statBonus: "STR +1"
-      },
-      {
-        id: 2,
-        title: "Baca 20 Halaman",
-        description: "Baca minimal 20 halaman buku apapun",
-        xpReward: 40,
-        goldReward: 20,
-        timeLeft: "12j 15m",
-        status: "active" as const,
-        difficulty: "Mudah" as const,
-        statBonus: "INT +1"
-      },
-      {
-        id: 3,
-        title: "Meditasi",
-        description: "10 menit meditasi mindfulness",
-        xpReward: 35,
-        goldReward: 15,
-        timeLeft: "8j 45m",
-        status: "completed" as const,
-        difficulty: "Mudah" as const,
-        statBonus: "WIS +1"
-      }
-    ],
-    weekly: [
-      {
-        id: 4,
-        title: "Pelajari Skill Baru",
-        description: "Habiskan 3 jam mempelajari sesuatu yang baru",
-        xpReward: 200,
-        goldReward: 100,
-        timeLeft: "3h 12j",
-        status: "active" as const,
-        difficulty: "Sedang" as const,
-        statBonus: "INT +3"
-      },
-      {
-        id: 5,
-        title: "Koneksi Sosial",
-        description: "Bercakap bermakna dengan 3 orang",
-        xpReward: 150,
-        goldReward: 75,
-        timeLeft: "5h 8j",
-        status: "active" as const,
-        difficulty: "Sedang" as const,
-        statBonus: "CHA +2"
-      }
-    ],
-    main: [
-      {
-        id: 6,
-        title: "Kuasai Programming",
-        description: "Selesaikan kursus programming lanjutan",
-        xpReward: 1000,
-        goldReward: 500,
-        timeLeft: "Tanpa batas",
-        status: "active" as const,
-        difficulty: "Sulit" as const,
-        statBonus: "INT +10, DEX +5"
-      }
-    ],
-    event: [
-      {
-        id: 7,
-        title: "Resolusi Tahun Baru",
-        description: "Tetapkan dan rencanakan tujuan untuk tahun ini",
-        xpReward: 300,
-        goldReward: 150,
-        timeLeft: "2h 6j",
-        status: "active" as const,
-        difficulty: "Sedang" as const,
-        statBonus: "WIS +5"
-      }
-    ]
   });
 
   const resetForm = () => {
@@ -134,11 +141,23 @@ const QuestBoard = () => {
         ...questForm,
         id: editingQuest ? editingQuest.id : Date.now(),
         status: 'active',
-        timeLeft: `${questForm.expireAfter}j 0m`
+        timeLeft: `${questForm.expireAfter}j 0m`,
+        isDefault: editingQuest?.isDefault || false
       };
 
       if (editingQuest) {
-        setCustomQuests(prev => prev.map(q => q.id === editingQuest.id ? questData : q));
+        if (editingQuest.isDefault) {
+          // Update default quest
+          setDefaultQuests(prev => ({
+            ...prev,
+            [questForm.type]: prev[questForm.type as keyof typeof prev].map(q => 
+              q.id === editingQuest.id ? questData : q
+            )
+          }));
+        } else {
+          // Update custom quest
+          setCustomQuests(prev => prev.map(q => q.id === editingQuest.id ? questData : q));
+        }
         setEditingQuest(null);
       } else {
         setCustomQuests(prev => [...prev, questData]);
@@ -157,7 +176,7 @@ const QuestBoard = () => {
       goldReward: quest.goldReward,
       difficulty: quest.difficulty,
       statBonus: quest.statBonus,
-      type: quest.type,
+      type: quest.type || 'daily',
       duration: quest.duration || 30,
       expireAfter: quest.expireAfter || 24
     });
@@ -165,8 +184,17 @@ const QuestBoard = () => {
     setIsAddingQuest(true);
   };
 
-  const handleDeleteQuest = (questId: number) => {
-    setCustomQuests(prev => prev.filter(q => q.id !== questId));
+  const handleDeleteQuest = (questId: number, isDefault: boolean, type: string) => {
+    if (isDefault) {
+      // Remove from default quests
+      setDefaultQuests(prev => ({
+        ...prev,
+        [type]: prev[type as keyof typeof prev].filter(q => q.id !== questId)
+      }));
+    } else {
+      // Remove from custom quests
+      setCustomQuests(prev => prev.filter(q => q.id !== questId));
+    }
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -190,9 +218,9 @@ const QuestBoard = () => {
 
   // Combine custom quests with default quests
   const getAllQuests = (type: string) => {
-    const defaultQuests = quests[type as keyof typeof quests] || [];
+    const defaultQuestsOfType = defaultQuests[type as keyof typeof defaultQuests] || [];
     const customQuestsOfType = customQuests.filter(quest => quest.type === type);
-    return [...defaultQuests, ...customQuestsOfType];
+    return [...defaultQuestsOfType, ...customQuestsOfType];
   };
 
   return (
@@ -357,26 +385,24 @@ const QuestBoard = () => {
               {getAllQuests('daily').map(quest => (
                 <div key={quest.id} className="relative">
                   <QuestCard quest={quest} type="daily" />
-                  {customQuests.some(cq => cq.id === quest.id) && (
-                    <div className="absolute top-2 right-2 flex gap-1">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleEditQuest(quest)}
-                      >
-                        <Edit2 className="w-3 h-3" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleDeleteQuest(quest.id)}
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  )}
+                  <div className="absolute top-2 right-2 flex gap-1">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-6 w-6 p-0"
+                      onClick={() => handleEditQuest({...quest, type: 'daily'})}
+                    >
+                      <Edit2 className="w-3 h-3" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      className="h-6 w-6 p-0"
+                      onClick={() => handleDeleteQuest(quest.id, quest.isDefault || false, 'daily')}
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </Button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -393,26 +419,24 @@ const QuestBoard = () => {
               {getAllQuests('weekly').map(quest => (
                 <div key={quest.id} className="relative">
                   <QuestCard quest={quest} type="weekly" />
-                  {customQuests.some(cq => cq.id === quest.id) && (
-                    <div className="absolute top-2 right-2 flex gap-1">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleEditQuest(quest)}
-                      >
-                        <Edit2 className="w-3 h-3" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleDeleteQuest(quest.id)}
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  )}
+                  <div className="absolute top-2 right-2 flex gap-1">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-6 w-6 p-0"
+                      onClick={() => handleEditQuest({...quest, type: 'weekly'})}
+                    >
+                      <Edit2 className="w-3 h-3" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      className="h-6 w-6 p-0"
+                      onClick={() => handleDeleteQuest(quest.id, quest.isDefault || false, 'weekly')}
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </Button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -426,26 +450,24 @@ const QuestBoard = () => {
               {getAllQuests('main').map(quest => (
                 <div key={quest.id} className="relative">
                   <QuestCard quest={quest} type="main" />
-                  {customQuests.some(cq => cq.id === quest.id) && (
-                    <div className="absolute top-2 right-2 flex gap-1">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleEditQuest(quest)}
-                      >
-                        <Edit2 className="w-3 h-3" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleDeleteQuest(quest.id)}
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  )}
+                  <div className="absolute top-2 right-2 flex gap-1">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-6 w-6 p-0"
+                      onClick={() => handleEditQuest({...quest, type: 'main'})}
+                    >
+                      <Edit2 className="w-3 h-3" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      className="h-6 w-6 p-0"
+                      onClick={() => handleDeleteQuest(quest.id, quest.isDefault || false, 'main')}
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </Button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -459,73 +481,30 @@ const QuestBoard = () => {
               {getAllQuests('event').map(quest => (
                 <div key={quest.id} className="relative">
                   <QuestCard quest={quest} type="event" />
-                  {customQuests.some(cq => cq.id === quest.id) && (
-                    <div className="absolute top-2 right-2 flex gap-1">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleEditQuest(quest)}
-                      >
-                        <Edit2 className="w-3 h-3" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        className="h-6 w-6 p-0"
-                        onClick={() => handleDeleteQuest(quest.id)}
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  )}
+                  <div className="absolute top-2 right-2 flex gap-1">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-6 w-6 p-0"
+                      onClick={() => handleEditQuest({...quest, type: 'event'})}
+                    >
+                      <Edit2 className="w-3 h-3" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      className="h-6 w-6 p-0"
+                      onClick={() => handleDeleteQuest(quest.id, quest.isDefault || false, 'event')}
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </Button>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </TabsContent>
       </Tabs>
-
-      {/* Custom Quests Management Section */}
-      {customQuests.length > 0 && (
-        <div className="mt-8">
-          <h3 className="text-xl font-orbitron font-bold mb-4">Quest Kustom Anda</h3>
-          <div className="grid gap-4">
-            {customQuests.map(quest => (
-              <div key={quest.id} className="glass rounded-lg p-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <h4 className="font-orbitron font-bold text-lg">{quest.title}</h4>
-                      <Badge variant="outline" className={getDifficultyColor(quest.difficulty)}>
-                        {quest.difficulty}
-                      </Badge>
-                      <Badge variant="secondary" className={getTypeColor(quest.type)}>
-                        {quest.type.toUpperCase()}
-                      </Badge>
-                    </div>
-                    <p className="text-muted-foreground text-sm mb-2">{quest.description}</p>
-                    <div className="flex gap-4 text-sm">
-                      <span className="text-primary">XP: {quest.xpReward}</span>
-                      <span className="text-yellow-400">Gold: {quest.goldReward}</span>
-                      <span className="text-accent">{quest.statBonus}</span>
-                      <span className="text-muted-foreground">Durasi: {quest.duration}m</span>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => handleEditQuest(quest)}>
-                      <Edit2 className="w-3 h-3" />
-                    </Button>
-                    <Button size="sm" variant="destructive" onClick={() => handleDeleteQuest(quest.id)}>
-                      <Trash2 className="w-3 h-3" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

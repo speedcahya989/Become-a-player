@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus } from 'lucide-react';
+import { Plus, Zap, Shield, Flame, Snowflake, Heart, Brain } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -40,6 +40,75 @@ const ShopTabs = () => {
       type: "power-up",
       rarity: "rare",
       weeklyLimit: true
+    }
+  ];
+
+  const buffs = [
+    {
+      id: 8,
+      name: "Pelindung Mental",
+      description: "Mencegah debuff negatif selama 1 jam",
+      price: 50,
+      type: "buff",
+      rarity: "common",
+      weeklyLimit: true,
+      icon: Shield,
+      color: "text-green-400"
+    },
+    {
+      id: 9,
+      name: "Healing Aura",
+      description: "Menghilangkan semua debuff aktif",
+      price: 75,
+      type: "buff",
+      rarity: "uncommon",
+      weeklyLimit: true,
+      icon: Heart,
+      color: "text-pink-400"
+    },
+    {
+      id: 10,
+      name: "Time Freeze",
+      description: "Quest tidak memiliki batas waktu selama 30 menit",
+      price: 100,
+      type: "buff",
+      rarity: "rare",
+      weeklyLimit: true,
+      icon: Snowflake,
+      color: "text-cyan-400"
+    },
+    {
+      id: 11,
+      name: "Motivasi Tinggi",
+      description: "Meningkatkan XP yang didapat dari quest sebesar 25%",
+      price: 80,
+      type: "buff",
+      rarity: "common",
+      weeklyLimit: true,
+      icon: Zap,
+      color: "text-blue-400"
+    },
+    {
+      id: 12,
+      name: "Fokus Mendalam",
+      description: "Mengurangi waktu pengerjaan quest sebesar 20%",
+      price: 90,
+      type: "buff",
+      rarity: "uncommon",
+      weeklyLimit: true,
+      icon: Brain,
+      color: "text-purple-400"
+    },
+    {
+      id: 13,
+      name: "Semangat Berapi",
+      description: "Meningkatkan chance critical success pada quest",
+      price: 120,
+      type: "buff",
+      rarity: "rare",
+      weeklyLimit: true,
+      icon: Flame,
+      color: "text-orange-400"
     }
   ];
 
@@ -122,54 +191,61 @@ const ShopTabs = () => {
 
   const renderShopItems = (items: any[]) => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {items.map(item => (
-        <div 
-          key={item.id} 
-          className={`glass rounded-lg p-4 transition-all duration-300 hover:scale-105 border-2 ${getRarityColor(item.rarity)}`}
-        >
-          <div className="mb-3">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="font-orbitron font-bold">{item.name}</h3>
-              <Badge variant="outline" className={`text-xs ${getRarityColor(item.rarity)}`}>
-                {item.rarity.toUpperCase()}
-              </Badge>
-            </div>
-            <p className="text-sm text-muted-foreground mb-2">{item.description}</p>
-            <div className="flex gap-2">
-              <Badge variant="secondary" className="text-xs">
-                {item.type}
-              </Badge>
-              {item.weeklyLimit && (
-                <Badge variant="outline" className="text-xs">
-                  1x/minggu
+      {items.map(item => {
+        const IconComponent = item.icon;
+        
+        return (
+          <div 
+            key={item.id} 
+            className={`glass rounded-lg p-4 transition-all duration-300 hover:scale-105 border-2 ${getRarityColor(item.rarity)}`}
+          >
+            <div className="mb-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  {IconComponent && <IconComponent className={`w-5 h-5 ${item.color}`} />}
+                  <h3 className="font-orbitron font-bold">{item.name}</h3>
+                </div>
+                <Badge variant="outline" className={`text-xs ${getRarityColor(item.rarity)}`}>
+                  {item.rarity.toUpperCase()}
                 </Badge>
-              )}
+              </div>
+              <p className="text-sm text-muted-foreground mb-2">{item.description}</p>
+              <div className="flex gap-2">
+                <Badge variant="secondary" className="text-xs">
+                  {item.type}
+                </Badge>
+                {item.weeklyLimit && (
+                  <Badge variant="outline" className="text-xs">
+                    1x/minggu
+                  </Badge>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
-              <div className="w-4 h-4 rounded-full bg-yellow-400"></div>
-              <span className="font-bold text-yellow-400">{item.price}</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1">
+                <div className="w-4 h-4 rounded-full bg-yellow-400"></div>
+                <span className="font-bold text-yellow-400">{item.price}</span>
+              </div>
+              
+              <Button 
+                size="sm"
+                className={`font-orbitron text-xs ${
+                  (playerGold >= item.price && (!item.weeklyLimit || !weeklyPurchases[item.id]))
+                    ? 'bg-primary hover:bg-primary/80' 
+                    : 'bg-muted cursor-not-allowed opacity-50'
+                }`}
+                style={{ boxShadow: (playerGold >= item.price && (!item.weeklyLimit || !weeklyPurchases[item.id])) ? '0 0 2px hsl(var(--primary))' : 'none' }}
+                disabled={playerGold < item.price || (item.weeklyLimit && weeklyPurchases[item.id])}
+                onClick={() => handlePurchase(item)}
+              >
+                {item.weeklyLimit && weeklyPurchases[item.id] ? 'DIBELI' : 
+                 playerGold >= item.price ? 'BELI' : 'GOLD KURANG'}
+              </Button>
             </div>
-            
-            <Button 
-              size="sm"
-              className={`font-orbitron text-xs ${
-                (playerGold >= item.price && (!item.weeklyLimit || !weeklyPurchases[item.id]))
-                  ? 'bg-primary hover:bg-primary/80' 
-                  : 'bg-muted cursor-not-allowed opacity-50'
-              }`}
-              style={{ boxShadow: (playerGold >= item.price && (!item.weeklyLimit || !weeklyPurchases[item.id])) ? '0 0 3px hsl(var(--primary)), 0 0 6px hsl(var(--primary))' : 'none' }}
-              disabled={playerGold < item.price || (item.weeklyLimit && weeklyPurchases[item.id])}
-              onClick={() => handlePurchase(item)}
-            >
-              {item.weeklyLimit && weeklyPurchases[item.id] ? 'DIBELI' : 
-               playerGold >= item.price ? 'BELI' : 'GOLD KURANG'}
-            </Button>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 
@@ -184,8 +260,9 @@ const ShopTabs = () => {
       </div>
 
       <Tabs defaultValue="power-ups" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 glass">
+        <TabsList className="grid w-full grid-cols-3 glass">
           <TabsTrigger value="power-ups" className="font-orbitron">Power-Ups</TabsTrigger>
+          <TabsTrigger value="buffs" className="font-orbitron">Buffs</TabsTrigger>
           <TabsTrigger value="rewards" className="font-orbitron">Rewards</TabsTrigger>
         </TabsList>
 
@@ -195,6 +272,15 @@ const ShopTabs = () => {
               <h3 className="text-xl font-orbitron font-bold">Power-Ups (1x per minggu)</h3>
             </div>
             {renderShopItems(powerUps)}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="buffs" className="mt-6">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xl font-orbitron font-bold">Buffs (1x per minggu)</h3>
+            </div>
+            {renderShopItems(buffs)}
           </div>
         </TabsContent>
 
@@ -272,7 +358,7 @@ const ShopTabs = () => {
 
       <div className="glass rounded-lg p-4 text-center">
         <p className="text-sm text-muted-foreground">
-          Power-ups reset setiap minggu • Rewards dapat dibeli berulang kali
+          Power-ups dan Buffs reset setiap minggu • Rewards dapat dibeli berulang kali
         </p>
       </div>
     </div>

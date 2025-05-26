@@ -13,7 +13,7 @@ const BuffDebuffList = () => {
       name: 'Motivasi Tinggi',
       type: 'buff',
       description: 'Meningkatkan XP yang didapat dari quest sebesar 25%',
-      duration: 1200, // detik
+      duration: 1200,
       maxDuration: 3600,
       effect: '+25% XP Gain',
       icon: Zap,
@@ -40,53 +40,109 @@ const BuffDebuffList = () => {
       effect: '-15% Gold Gain',
       icon: Clock,
       color: 'text-red-400'
-    },
-    {
-      id: 4,
-      name: 'Semangat Berapi',
-      type: 'buff',
-      description: 'Meningkatkan chance critical success pada quest',
-      duration: 900,
-      maxDuration: 1800,
-      effect: '+30% Crit Chance',
-      icon: Flame,
-      color: 'text-orange-400'
     }
   ]);
 
-  const [availableEffects] = useState([
+  const [allBuffsDebuffs] = useState([
     {
-      id: 5,
+      id: 1,
+      name: 'Motivasi Tinggi',
+      type: 'buff',
+      description: 'Meningkatkan XP yang didapat dari quest sebesar 25%',
+      effect: '+25% XP Gain',
+      icon: Zap,
+      color: 'text-blue-400',
+      rarity: 'common'
+    },
+    {
+      id: 2,
+      name: 'Fokus Mendalam',
+      type: 'buff',
+      description: 'Mengurangi waktu pengerjaan quest sebesar 20%',
+      effect: '-20% Quest Time',
+      icon: Brain,
+      color: 'text-purple-400',
+      rarity: 'uncommon'
+    },
+    {
+      id: 3,
+      name: 'Semangat Berapi',
+      type: 'buff',
+      description: 'Meningkatkan chance critical success pada quest',
+      effect: '+30% Crit Chance',
+      icon: Flame,
+      color: 'text-orange-400',
+      rarity: 'rare'
+    },
+    {
+      id: 4,
       name: 'Pelindung Mental',
       type: 'buff',
       description: 'Mencegah debuff negatif selama 1 jam',
-      cost: 50,
-      duration: 3600,
       effect: 'Debuff Immunity',
       icon: Shield,
-      color: 'text-green-400'
+      color: 'text-green-400',
+      rarity: 'common'
     },
     {
-      id: 6,
+      id: 5,
       name: 'Healing Aura',
       type: 'buff',
       description: 'Menghilangkan semua debuff aktif',
-      cost: 75,
-      duration: 0,
       effect: 'Remove All Debuffs',
       icon: Heart,
-      color: 'text-pink-400'
+      color: 'text-pink-400',
+      rarity: 'uncommon'
     },
     {
-      id: 7,
+      id: 6,
       name: 'Time Freeze',
       type: 'buff',
       description: 'Quest tidak memiliki batas waktu selama 30 menit',
-      cost: 100,
-      duration: 1800,
       effect: 'No Time Limits',
       icon: Snowflake,
-      color: 'text-cyan-400'
+      color: 'text-cyan-400',
+      rarity: 'rare'
+    },
+    {
+      id: 7,
+      name: 'Kelelahan',
+      type: 'debuff',
+      description: 'Mengurangi gold yang didapat sebesar 15%',
+      effect: '-15% Gold Gain',
+      icon: Clock,
+      color: 'text-red-400',
+      rarity: 'common'
+    },
+    {
+      id: 8,
+      name: 'Stress Mental',
+      type: 'debuff',
+      description: 'Mengurangi XP yang didapat sebesar 20%',
+      effect: '-20% XP Gain',
+      icon: Brain,
+      color: 'text-red-400',
+      rarity: 'uncommon'
+    },
+    {
+      id: 9,
+      name: 'Demotivasi',
+      type: 'debuff',
+      description: 'Meningkatkan waktu pengerjaan quest sebesar 30%',
+      effect: '+30% Quest Time',
+      icon: Clock,
+      color: 'text-red-400',
+      rarity: 'rare'
+    },
+    {
+      id: 10,
+      name: 'Kebingungan',
+      type: 'debuff',
+      description: 'Mengurangi chance critical success pada quest',
+      effect: '-25% Crit Chance',
+      icon: Brain,
+      color: 'text-red-400',
+      rarity: 'common'
     }
   ]);
 
@@ -112,11 +168,25 @@ const BuffDebuffList = () => {
     return type === 'buff' ? 'bg-blue-500/10' : 'bg-red-500/10';
   };
 
+  const getRarityColor = (rarity: string) => {
+    switch (rarity) {
+      case 'common': return 'text-gray-400';
+      case 'uncommon': return 'text-green-400';
+      case 'rare': return 'text-blue-400';
+      case 'epic': return 'text-purple-400';
+      case 'legendary': return 'text-orange-400';
+      default: return 'text-gray-400';
+    }
+  };
+
+  const buffs = allBuffsDebuffs.filter(item => item.type === 'buff');
+  const debuffs = allBuffsDebuffs.filter(item => item.type === 'debuff');
+
   return (
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-3xl font-orbitron font-bold hologram-text mb-2">Buff & Debuff</h2>
-        <p className="text-muted-foreground">Kelola efek aktif pada karakter Anda</p>
+        <p className="text-muted-foreground">Kelola efek aktif dan pelajari semua efek yang tersedia</p>
       </div>
 
       {/* Active Effects */}
@@ -175,42 +245,37 @@ const BuffDebuffList = () => {
         </CardContent>
       </Card>
 
-      {/* Available Buffs */}
+      {/* All Buffs */}
       <Card className="glass">
         <CardHeader>
-          <CardTitle className="font-orbitron">Buff Tersedia</CardTitle>
+          <CardTitle className="font-orbitron text-blue-400">Daftar Semua Buff</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            {availableEffects.map(effect => {
-              const IconComponent = effect.icon;
+            {buffs.map(buff => {
+              const IconComponent = buff.icon;
               
               return (
                 <div
-                  key={effect.id}
-                  className="p-4 rounded-lg border border-border bg-card/20"
+                  key={buff.id}
+                  className="p-4 rounded-lg border border-blue-500/20 bg-blue-500/5"
                 >
-                  <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <IconComponent className={`w-6 h-6 ${effect.color}`} />
+                      <IconComponent className={`w-6 h-6 ${buff.color}`} />
                       <div>
-                        <h4 className="font-orbitron font-bold">{effect.name}</h4>
-                        <p className="text-sm text-muted-foreground">{effect.description}</p>
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className="font-orbitron font-bold">{buff.name}</h4>
+                          <Badge variant="outline" className={getRarityColor(buff.rarity)}>
+                            {buff.rarity.toUpperCase()}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{buff.description}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-green-400 border-green-400/30">
-                        {effect.effect}
-                      </Badge>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div className="text-sm text-muted-foreground">
-                      {effect.duration > 0 ? `Durasi: ${formatTime(effect.duration)}` : 'Efek instant'}
-                    </div>
-                    <Button size="sm" className="font-orbitron">
-                      Beli ({effect.cost} Gold)
-                    </Button>
+                    <Badge variant="outline" className="text-blue-400 border-blue-400/30">
+                      {buff.effect}
+                    </Badge>
                   </div>
                 </div>
               );
@@ -218,6 +283,51 @@ const BuffDebuffList = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* All Debuffs */}
+      <Card className="glass">
+        <CardHeader>
+          <CardTitle className="font-orbitron text-red-400">Daftar Semua Debuff</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4">
+            {debuffs.map(debuff => {
+              const IconComponent = debuff.icon;
+              
+              return (
+                <div
+                  key={debuff.id}
+                  className="p-4 rounded-lg border border-red-500/20 bg-red-500/5"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <IconComponent className={`w-6 h-6 ${debuff.color}`} />
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className="font-orbitron font-bold">{debuff.name}</h4>
+                          <Badge variant="outline" className={getRarityColor(debuff.rarity)}>
+                            {debuff.rarity.toUpperCase()}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{debuff.description}</p>
+                      </div>
+                    </div>
+                    <Badge variant="outline" className="text-red-400 border-red-400/30">
+                      {debuff.effect}
+                    </Badge>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="glass rounded-lg p-4 text-center">
+        <p className="text-sm text-muted-foreground">
+          Buff dapat dibeli di menu Toko • Debuff akan hilang seiring waktu atau dengan item khusus
+        </p>
+      </div>
     </div>
   );
 };
