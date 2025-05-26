@@ -1,11 +1,12 @@
 
 import React, { useState } from 'react';
-import CharacterProfile from '../components/CharacterProfile';
+import PlayerProfile from '../components/PlayerProfile';
 import QuestBoard from '../components/QuestBoard';
 import BuffDebuffStatus from '../components/BuffDebuffStatus';
-import Shop from '../components/Shop';
+import ShopTabs from '../components/ShopTabs';
 import StatsPanel from '../components/StatsPanel';
 import Settings from '../components/Settings';
+import QuestSettings from '../components/QuestSettings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Index = () => {
@@ -35,18 +36,19 @@ const Index = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Character Profile - Left Sidebar */}
           <div className="lg:col-span-1">
-            <CharacterProfile />
+            <PlayerProfile />
           </div>
 
           {/* Main Content */}
           <div className="lg:col-span-2">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-5 glass">
-                <TabsTrigger value="quests" className="font-orbitron">Quest</TabsTrigger>
-                <TabsTrigger value="shop" className="font-orbitron">Toko</TabsTrigger>
-                <TabsTrigger value="stats" className="font-orbitron">Stats</TabsTrigger>
-                <TabsTrigger value="achievements" className="font-orbitron">Prestasi</TabsTrigger>
-                <TabsTrigger value="settings" className="font-orbitron">Pengaturan</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-6 glass">
+                <TabsTrigger value="quests" className="font-orbitron text-xs">Quest</TabsTrigger>
+                <TabsTrigger value="shop" className="font-orbitron text-xs">Toko</TabsTrigger>
+                <TabsTrigger value="stats" className="font-orbitron text-xs">Stats</TabsTrigger>
+                <TabsTrigger value="achievements" className="font-orbitron text-xs">Prestasi</TabsTrigger>
+                <TabsTrigger value="quest-settings" className="font-orbitron text-xs">Pengaturan</TabsTrigger>
+                <TabsTrigger value="settings" className="font-orbitron text-xs">Setting</TabsTrigger>
               </TabsList>
 
               <TabsContent value="quests" className="mt-6">
@@ -54,7 +56,7 @@ const Index = () => {
               </TabsContent>
 
               <TabsContent value="shop" className="mt-6">
-                <Shop />
+                <ShopTabs />
               </TabsContent>
 
               <TabsContent value="stats" className="mt-6">
@@ -66,6 +68,10 @@ const Index = () => {
                   <h3 className="text-xl font-orbitron font-bold mb-4">Sistem Prestasi</h3>
                   <p className="text-muted-foreground">Sistem prestasi akan segera hadir...</p>
                 </div>
+              </TabsContent>
+
+              <TabsContent value="quest-settings" className="mt-6">
+                <QuestSettings />
               </TabsContent>
 
               <TabsContent value="settings" className="mt-6">

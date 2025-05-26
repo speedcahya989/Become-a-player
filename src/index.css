@@ -70,16 +70,16 @@
   }
 
   .neon-glow {
-    box-shadow: 0 0 8px hsl(var(--neon-blue)), 0 0 16px hsl(var(--neon-blue));
+    box-shadow: 0 0 4px hsl(var(--neon-blue)), 0 0 8px hsl(var(--neon-blue));
   }
 
   .buff-glow {
-    box-shadow: 0 0 6px hsl(var(--buff-glow)), 0 0 12px hsl(var(--buff-glow));
+    box-shadow: 0 0 3px hsl(var(--buff-glow)), 0 0 6px hsl(var(--buff-glow));
     animation: pulse-buff 2s ease-in-out infinite alternate;
   }
 
   .debuff-glow {
-    box-shadow: 0 0 6px hsl(var(--debuff-glow)), 0 0 12px hsl(var(--debuff-glow));
+    box-shadow: 0 0 3px hsl(var(--debuff-glow)), 0 0 6px hsl(var(--debuff-glow));
     animation: pulse-debuff 2s ease-in-out infinite alternate;
   }
 
@@ -108,13 +108,13 @@
 
 @layer utilities {
   @keyframes pulse-buff {
-    0% { box-shadow: 0 0 6px hsl(var(--buff-glow)), 0 0 12px hsl(var(--buff-glow)); }
-    100% { box-shadow: 0 0 10px hsl(var(--buff-glow)), 0 0 20px hsl(var(--buff-glow)); }
+    0% { box-shadow: 0 0 3px hsl(var(--buff-glow)), 0 0 6px hsl(var(--buff-glow)); }
+    100% { box-shadow: 0 0 5px hsl(var(--buff-glow)), 0 0 10px hsl(var(--buff-glow)); }
   }
 
   @keyframes pulse-debuff {
-    0% { box-shadow: 0 0 6px hsl(var(--debuff-glow)), 0 0 12px hsl(var(--debuff-glow)); }
-    100% { box-shadow: 0 0 10px hsl(var(--debuff-glow)), 0 0 20px hsl(var(--debuff-glow)); }
+    0% { box-shadow: 0 0 3px hsl(var(--debuff-glow)), 0 0 6px hsl(var(--debuff-glow)); }
+    100% { box-shadow: 0 0 5px hsl(var(--debuff-glow)), 0 0 10px hsl(var(--debuff-glow)); }
   }
 
   @keyframes float {

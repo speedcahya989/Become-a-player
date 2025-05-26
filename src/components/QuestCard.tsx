@@ -1,8 +1,8 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Clock, Star } from 'lucide-react';
+import { Clock, Star, Play, Pause, Square } from 'lucide-react';
 import { playSound, showNotification } from '../utils/gameUtils';
 
 interface Quest {
@@ -12,9 +12,10 @@ interface Quest {
   xpReward: number;
   goldReward: number;
   timeLeft: string;
-  status: 'active' | 'completed' | 'expired';
+  status: 'active' | 'completed' | 'expired' | 'in-progress';
   difficulty: 'Mudah' | 'Sedang' | 'Sulit';
   statBonus: string;
+  duration?: number; // in minutes
 }
 
 interface QuestCardProps {
@@ -23,6 +24,29 @@ interface QuestCardProps {
 }
 
 const QuestCard: React.FC<QuestCardProps> = ({ quest, type }) => {
+  const [questStatus, setQuestStatus] = useState(quest.status);
+  const [timer, setTimer] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isRunning && timer > 0) {
+      interval = setInterval(() => {
+        setTimer(timer => {
+          if (timer <= 1) {
+            setIsRunning(false);
+            setQuestStatus('completed');
+            playSound('questComplete');
+            showNotification('Quest Selesai!', `Kamu telah menyelesaikan: ${quest.title}`);
+            return 0;
+          }
+          return timer - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isRunning, timer, quest.title]);
+
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'Mudah': return 'bg-green-500/20 text-green-400 border-green-500/30';
@@ -52,15 +76,37 @@ const QuestCard: React.FC<QuestCardProps> = ({ quest, type }) => {
     }
   };
 
-  const isCompleted = quest.status === 'completed';
-  const isExpired = quest.status === 'expired';
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   const handleStartQuest = () => {
-    if (!isCompleted && !isExpired) {
+    if (questStatus === 'active') {
+      setTimer((quest.duration || 30) * 60); // Convert minutes to seconds
+      setIsRunning(true);
+      setQuestStatus('in-progress');
       playSound('questStart');
-      showNotification('Quest dimulai!', `Kamu telah memulai quest: ${quest.title}`);
+      showNotification('Quest dimulai!', `Timer dimulai untuk: ${quest.title}`);
     }
   };
+
+  const handlePauseQuest = () => {
+    setIsRunning(!isRunning);
+    playSound('buttonClick');
+  };
+
+  const handleStopQuest = () => {
+    setIsRunning(false);
+    setTimer(0);
+    setQuestStatus('active');
+    playSound('buttonClick');
+  };
+
+  const isCompleted = questStatus === 'completed';
+  const isExpired = questStatus === 'expired';
+  const isInProgress = questStatus === 'in-progress';
 
   return (
     <div className={`quest-card ${isCompleted ? 'opacity-75' : ''} ${isExpired ? 'opacity-50 border-red-500/50' : ''}`}>
@@ -79,6 +125,26 @@ const QuestCard: React.FC<QuestCardProps> = ({ quest, type }) => {
           <p className="text-xs text-accent">{quest.statBonus}</p>
         </div>
       </div>
+
+      {/* Timer Display */}
+      {isInProgress && (
+        <div className="mb-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-orbitron">Timer:</span>
+            <span className="text-xl font-orbitron font-bold text-primary">
+              {formatTime(timer)}
+            </span>
+          </div>
+          <div className="flex gap-2 mt-2">
+            <Button size="sm" variant="outline" onClick={handlePauseQuest}>
+              {isRunning ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+            </Button>
+            <Button size="sm" variant="outline" onClick={handleStopQuest}>
+              <Square className="w-3 h-3" />
+            </Button>
+          </div>
+        </div>
+      )}
 
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
@@ -104,16 +170,20 @@ const QuestCard: React.FC<QuestCardProps> = ({ quest, type }) => {
 
       <Button 
         onClick={handleStartQuest}
-        className={`w-full font-orbitron text-sm py-2 ${
+        className={`w-full font-orbitron text-xs py-1.5 transition-all ${
           isCompleted 
             ? 'bg-green-600 hover:bg-green-700' 
             : isExpired 
             ? 'bg-red-600/50 cursor-not-allowed' 
-            : 'bg-primary hover:bg-primary/80 neon-glow'
+            : isInProgress
+            ? 'bg-blue-600 hover:bg-blue-700'
+            : 'bg-primary hover:bg-primary/80'
         }`}
-        disabled={isCompleted || isExpired}
+        style={{ boxShadow: isCompleted || isExpired || isInProgress ? 'none' : '0 0 4px hsl(var(--primary)), 0 0 8px hsl(var(--primary))' }}
+        disabled={isCompleted || isExpired || isInProgress}
+        size="sm"
       >
-        {isCompleted ? 'SELESAI' : isExpired ? 'KADALUARSA' : 'MULAI QUEST'}
+        {isCompleted ? 'SELESAI' : isExpired ? 'KADALUARSA' : isInProgress ? 'BERJALAN' : 'MULAI'}
       </Button>
     </div>
   );
