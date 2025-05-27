@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Brain, Zap, Flame, Star, Clock, Shield, Frown, Timer, Heart, Snowflake, X } from 'lucide-react';
+import { Brain, Zap, Flame, Star, Clock, Shield, Frown, Timer, Heart, Snowflake, X, Ban } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const BuffDebuffList = () => {
@@ -15,7 +15,7 @@ const BuffDebuffList = () => {
       id: 1,
       name: '🧠 Focused',
       type: 'buff',
-      description: '+20% XP dari semua quest hari itu',
+      description: t('buffs.focused.description'),
       duration: 1200,
       maxDuration: 3600,
       effect: '+20% XP',
@@ -26,7 +26,7 @@ const BuffDebuffList = () => {
       id: 2,
       name: '💪 Energetic',
       type: 'buff',
-      description: 'Tambahan +5 XP untuk semua quest selama 3 hari',
+      description: t('buffs.energetic.description'),
       duration: 2400,
       maxDuration: 3600,
       effect: '+5 XP',
@@ -41,7 +41,7 @@ const BuffDebuffList = () => {
       id: 1,
       name: '🧠 Focused',
       type: 'buff',
-      description: '+20% XP dari semua quest hari itu',
+      description: t('buffs.focused.description'),
       effect: '+20% XP',
       icon: Brain,
       color: 'text-blue-400',
@@ -51,7 +51,7 @@ const BuffDebuffList = () => {
       id: 2,
       name: '💪 Energetic',
       type: 'buff',
-      description: 'Tambahan +5 XP untuk semua quest selama 3 hari',
+      description: t('buffs.energetic.description'),
       effect: '+5 XP',
       icon: Zap,
       color: 'text-green-400',
@@ -61,7 +61,7 @@ const BuffDebuffList = () => {
       id: 3,
       name: '🔥 Momentum',
       type: 'buff',
-      description: 'XP dari quest dilipatgandakan 1.5x selama 1 hari',
+      description: t('buffs.momentum.description'),
       effect: '1.5x XP',
       icon: Flame,
       color: 'text-orange-400',
@@ -71,8 +71,8 @@ const BuffDebuffList = () => {
       id: 4,
       name: '🌟 Lucky Streak',
       type: 'buff',
-      description: 'Gold dari reward shop diskon 50% selama 2 hari',
-      effect: '50% Diskon',
+      description: t('buffs.lucky.description'),
+      effect: t('buffs.lucky.effect'),
       icon: Star,
       color: 'text-yellow-400',
       rarity: 'rare'
@@ -81,8 +81,8 @@ const BuffDebuffList = () => {
       id: 5,
       name: '🕒 Time Master',
       type: 'buff',
-      description: 'Boleh mengubah deadline quest harian 1 kali tanpa penalti',
-      effect: 'Deadline Flex',
+      description: t('buffs.timemaster.description'),
+      effect: t('buffs.timemaster.effect'),
       icon: Clock,
       color: 'text-purple-400',
       rarity: 'uncommon'
@@ -91,8 +91,8 @@ const BuffDebuffList = () => {
       id: 6,
       name: '🔒 Shielded',
       type: 'buff',
-      description: 'Debuff tidak aktif selama 1 hari',
-      effect: 'Debuff Immunity',
+      description: t('buffs.shielded.description'),
+      effect: t('buffs.shielded.effect'),
       icon: Shield,
       color: 'text-cyan-400',
       rarity: 'uncommon'
@@ -103,8 +103,8 @@ const BuffDebuffList = () => {
       id: 7,
       name: '😫 Fatigued',
       type: 'debuff',
-      description: 'Tidak bisa ambil quest level tinggi (XP > 30)',
-      effect: 'Quest Limit',
+      description: t('debuffs.fatigued.description'),
+      effect: t('debuffs.fatigued.effect'),
       icon: Timer,
       color: 'text-red-400',
       rarity: 'common'
@@ -113,8 +113,8 @@ const BuffDebuffList = () => {
       id: 8,
       name: '⏳ Procrastinating',
       type: 'debuff',
-      description: 'Tidak bisa membuka quest baru',
-      effect: 'Quest Block',
+      description: t('debuffs.procrastinating.description'),
+      effect: t('debuffs.procrastinating.effect'),
       icon: Clock,
       color: 'text-red-400',
       rarity: 'uncommon'
@@ -123,8 +123,8 @@ const BuffDebuffList = () => {
       id: 9,
       name: '😞 Demotivated',
       type: 'debuff',
-      description: 'Tidak boleh ke shop selama 3 hari',
-      effect: 'Shop Block',
+      description: t('debuffs.demotivated.description'),
+      effect: t('debuffs.demotivated.effect'),
       icon: Frown,
       color: 'text-red-400',
       rarity: 'rare'
@@ -133,8 +133,8 @@ const BuffDebuffList = () => {
       id: 10,
       name: '🚫 Blocked',
       type: 'debuff',
-      description: 'XP & gold berkurang 70% selama 1 hari',
-      effect: '-70% Rewards',
+      description: t('debuffs.blocked.description'),
+      effect: t('debuffs.blocked.effect'),
       icon: X,
       color: 'text-red-400',
       rarity: 'rare'
@@ -143,9 +143,19 @@ const BuffDebuffList = () => {
       id: 11,
       name: '❄️ Frozen',
       type: 'debuff',
-      description: 'Tidak bisa akses quest selama 1 hari',
-      effect: 'Quest Freeze',
+      description: t('debuffs.frozen.description'),
+      effect: t('debuffs.frozen.effect'),
       icon: Snowflake,
+      color: 'text-red-400',
+      rarity: 'common'
+    },
+    {
+      id: 12,
+      name: '😴 Tired',
+      type: 'debuff',
+      description: t('debuffs.tired.description'),
+      effect: t('debuffs.tired.effect'),
+      icon: Ban,
       color: 'text-red-400',
       rarity: 'common'
     }
@@ -157,7 +167,7 @@ const BuffDebuffList = () => {
     const secs = seconds % 60;
     
     if (hours > 0) {
-      return `${hours}j ${minutes}m`;
+      return `${hours}h ${minutes}m`;
     } else if (minutes > 0) {
       return `${minutes}m ${secs}s`;
     } else {
@@ -233,7 +243,7 @@ const BuffDebuffList = () => {
                     </div>
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span>Sisa waktu: {formatTime(effect.duration)}</span>
+                        <span>{t('buffs.timeRemaining')}: {formatTime(effect.duration)}</span>
                         <span>{Math.round(progressPercentage)}%</span>
                       </div>
                       <Progress value={progressPercentage} className="h-2" />
@@ -272,7 +282,7 @@ const BuffDebuffList = () => {
                         <div className="flex items-center gap-2 mb-1">
                           <h4 className="font-orbitron font-bold">{buff.name}</h4>
                           <Badge variant="outline" className={getRarityColor(buff.rarity)}>
-                            {buff.rarity.toUpperCase()}
+                            {t(`shop.rarity.${buff.rarity}`).toUpperCase()}
                           </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground">{buff.description}</p>
@@ -311,7 +321,7 @@ const BuffDebuffList = () => {
                         <div className="flex items-center gap-2 mb-1">
                           <h4 className="font-orbitron font-bold">{debuff.name}</h4>
                           <Badge variant="outline" className={getRarityColor(debuff.rarity)}>
-                            {debuff.rarity.toUpperCase()}
+                            {t(`shop.rarity.${debuff.rarity}`).toUpperCase()}
                           </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground">{debuff.description}</p>
@@ -330,7 +340,7 @@ const BuffDebuffList = () => {
 
       <div className="glass rounded-lg p-4 text-center">
         <p className="text-sm text-muted-foreground">
-          Buff dapat dibeli di menu Toko • Debuff akan hilang seiring waktu atau dengan item khusus
+          {t('buffs.info')}
         </p>
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,7 +17,7 @@ const ShopTabs = () => {
     {
       id: 1,
       name: "Pizza Premium",
-      description: "Pesan pizza favorit tanpa rasa bersalah!",
+      description: t('shop.reward.pizza.description'),
       price: 150,
       category: "reward",
       rarity: "Common",
@@ -27,8 +26,8 @@ const ShopTabs = () => {
     },
     {
       id: 2,
-      name: "Film Bioskop",
-      description: "Nonton film terbaru di bioskop",
+      name: t('shop.reward.movie.name'),
+      description: t('shop.reward.movie.description'),
       price: 200,
       category: "reward",
       rarity: "Rare",
@@ -40,72 +39,72 @@ const ShopTabs = () => {
   const [powerups, setPowerups] = useState([
     {
       id: 1,
-      name: "🧠 Focused",
-      description: "+20% XP dari semua quest hari itu",
+      name: "⚡ Lightning Reflexes",
+      description: t('shop.ability.lightning.description'),
       price: 100,
       category: "powerup",
       rarity: "Common",
-      icon: "🧠",
+      icon: "⚡",
       canEdit: false,
       cooldown: "Weekly",
       lastPurchased: null
     },
     {
       id: 2,
-      name: "💪 Energetic", 
-      description: "Tambahan +5 XP untuk semua quest selama 3 hari",
+      name: "🔮 Crystal Vision", 
+      description: t('shop.ability.crystal.description'),
       price: 150,
       category: "powerup",
       rarity: "Common",
-      icon: "💪",
+      icon: "🔮",
       canEdit: false,
       cooldown: "Weekly",
       lastPurchased: null
     },
     {
       id: 3,
-      name: "🔥 Momentum",
-      description: "XP dari quest dilipatgandakan 1.5x selama 1 hari",
+      name: "🌊 Flow State",
+      description: t('shop.ability.flow.description'),
       price: 250,
       category: "powerup",
       rarity: "Rare",
-      icon: "🔥",
+      icon: "🌊",
       canEdit: false,
       cooldown: "Weekly",
       lastPurchased: null
     },
     {
       id: 4,
-      name: "🌟 Lucky Streak",
-      description: "Gold dari reward shop diskon 50% selama 2 hari",
+      name: "🎯 Perfect Aim",
+      description: t('shop.ability.aim.description'),
       price: 200,
       category: "powerup",
       rarity: "Rare",
-      icon: "🌟",
+      icon: "🎯",
       canEdit: false,
       cooldown: "Weekly",
       lastPurchased: null
     },
     {
       id: 5,
-      name: "🕒 Time Master",
-      description: "Boleh mengubah deadline quest harian 1 kali tanpa penalti",
+      name: "🌟 Stellar Focus",
+      description: t('shop.ability.stellar.description'),
       price: 180,
       category: "powerup",
       rarity: "Uncommon",
-      icon: "🕒",
+      icon: "🌟",
       canEdit: false,
       cooldown: "Weekly",
       lastPurchased: null
     },
     {
       id: 6,
-      name: "🔒 Shielded",
-      description: "Debuff tidak aktif selama 1 hari",
+      name: "🛡️ Aegis Shield",
+      description: t('shop.ability.aegis.description'),
       price: 300,
       category: "powerup",
       rarity: "Uncommon",
-      icon: "🔒",
+      icon: "🛡️",
       canEdit: false,
       cooldown: "Weekly",
       lastPurchased: null
@@ -240,37 +239,37 @@ const ShopTabs = () => {
           <DialogTrigger asChild>
             <Button className="font-orbitron">
               <Plus className="w-4 h-4 mr-2" />
-              {t('button.add')} Item
+              {t('button.add')} {t('shop.item')}
             </Button>
           </DialogTrigger>
           <DialogContent className="glass max-w-lg">
             <DialogHeader>
               <DialogTitle className="font-orbitron">
-                {editingItem ? `${t('button.edit')} Item` : `${t('button.add')} Item Baru`}
+                {editingItem ? `${t('button.edit')} ${t('shop.item')}` : `${t('button.add')} ${t('shop.newItem')}`}
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="item-name">Nama Item</Label>
+                <Label htmlFor="item-name">{t('shop.form.name')}</Label>
                 <Input
                   id="item-name"
                   value={itemForm.name}
                   onChange={(e) => setItemForm(prev => ({ ...prev, name: e.target.value }))}
-                  placeholder="Masukkan nama item"
+                  placeholder={t('shop.form.namePlaceholder')}
                 />
               </div>
               <div>
-                <Label htmlFor="item-desc">Deskripsi</Label>
+                <Label htmlFor="item-desc">{t('shop.form.description')}</Label>
                 <Textarea
                   id="item-desc"
                   value={itemForm.description}
                   onChange={(e) => setItemForm(prev => ({ ...prev, description: e.target.value }))}
-                  placeholder="Masukkan deskripsi item"
+                  placeholder={t('shop.form.descriptionPlaceholder')}
                   rows={3}
                 />
               </div>
               <div>
-                <Label htmlFor="item-price">Harga (Gold)</Label>
+                <Label htmlFor="item-price">{t('shop.form.price')}</Label>
                 <Input
                   id="item-price"
                   type="number"
@@ -280,34 +279,34 @@ const ShopTabs = () => {
                 />
               </div>
               <div>
-                <Label htmlFor="item-category">Kategori</Label>
+                <Label htmlFor="item-category">{t('shop.form.category')}</Label>
                 <select 
                   id="item-category"
                   value={itemForm.category}
                   onChange={(e) => setItemForm(prev => ({ ...prev, category: e.target.value }))}
                   className="w-full p-2 bg-background border border-border rounded-md"
                 >
-                  <option value="reward">Reward</option>
-                  <option value="powerup">Power-up</option>
+                  <option value="reward">{t('shop.rewards')}</option>
+                  <option value="powerup">{t('shop.abilities')}</option>
                 </select>
               </div>
               <div>
-                <Label htmlFor="item-rarity">Rarity</Label>
+                <Label htmlFor="item-rarity">{t('shop.form.rarity')}</Label>
                 <select 
                   id="item-rarity"
                   value={itemForm.rarity}
                   onChange={(e) => setItemForm(prev => ({ ...prev, rarity: e.target.value }))}
                   className="w-full p-2 bg-background border border-border rounded-md"
                 >
-                  <option value="Common">Common</option>
-                  <option value="Uncommon">Uncommon</option>
-                  <option value="Rare">Rare</option>
-                  <option value="Epic">Epic</option>
-                  <option value="Legendary">Legendary</option>
+                  <option value="Common">{t('shop.rarity.common')}</option>
+                  <option value="Uncommon">{t('shop.rarity.uncommon')}</option>
+                  <option value="Rare">{t('shop.rarity.rare')}</option>
+                  <option value="Epic">{t('shop.rarity.epic')}</option>
+                  <option value="Legendary">{t('shop.rarity.legendary')}</option>
                 </select>
               </div>
               <div>
-                <Label htmlFor="item-icon">Icon (Emoji)</Label>
+                <Label htmlFor="item-icon">{t('shop.form.icon')}</Label>
                 <Input
                   id="item-icon"
                   value={itemForm.icon}
@@ -318,7 +317,7 @@ const ShopTabs = () => {
             </div>
             <div className="flex gap-2 mt-4">
               <Button onClick={handleSaveItem} className="flex-1">
-                {editingItem ? t('button.update') : t('button.add')} Item
+                {editingItem ? t('button.update') : t('button.add')} {t('shop.item')}
               </Button>
               <Button variant="outline" onClick={() => {
                 setIsAddingItem(false);
@@ -335,7 +334,7 @@ const ShopTabs = () => {
       <Tabs defaultValue="rewards" className="w-full">
         <TabsList className="grid w-full grid-cols-2 glass">
           <TabsTrigger value="rewards" className="font-orbitron">{t('shop.rewards')}</TabsTrigger>
-          <TabsTrigger value="powerups" className="font-orbitron">{t('shop.powerups')}</TabsTrigger>
+          <TabsTrigger value="powerups" className="font-orbitron">{t('shop.abilities')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="rewards" className="mt-6">
@@ -349,12 +348,12 @@ const ShopTabs = () => {
                         <span className="text-2xl">{reward.icon}</span>
                         <h4 className="font-orbitron font-bold text-lg">{reward.name}</h4>
                         <Badge variant="outline" className={getRarityColor(reward.rarity)}>
-                          {reward.rarity}
+                          {t(`shop.rarity.${reward.rarity.toLowerCase()}`)}
                         </Badge>
                       </div>
                       <p className="text-muted-foreground text-sm mb-3">{reward.description}</p>
                       <div className="flex items-center gap-4">
-                        <span className="text-yellow-400 font-orbitron font-bold">{reward.price} Gold</span>
+                        <span className="text-yellow-400 font-orbitron font-bold">{reward.price} {t('common.gold')}</span>
                         <Button className="font-orbitron">
                           <ShoppingCart className="w-4 h-4 mr-2" />
                           {t('shop.buy')}
@@ -389,7 +388,7 @@ const ShopTabs = () => {
                         <span className="text-2xl">{powerup.icon}</span>
                         <h4 className="font-orbitron font-bold text-lg">{powerup.name}</h4>
                         <Badge variant="outline" className={getRarityColor(powerup.rarity)}>
-                          {powerup.rarity}
+                          {t(`shop.rarity.${powerup.rarity.toLowerCase()}`)}
                         </Badge>
                         <Badge variant="outline" className="text-purple-400 border-purple-400/30">
                           <Clock className="w-3 h-3 mr-1" />
@@ -398,7 +397,7 @@ const ShopTabs = () => {
                       </div>
                       <p className="text-muted-foreground text-sm mb-3">{powerup.description}</p>
                       <div className="flex items-center gap-4">
-                        <span className="text-yellow-400 font-orbitron font-bold">{powerup.price} Gold</span>
+                        <span className="text-yellow-400 font-orbitron font-bold">{powerup.price} {t('common.gold')}</span>
                         <Button 
                           className="font-orbitron"
                           disabled={!canPurchase(powerup)}

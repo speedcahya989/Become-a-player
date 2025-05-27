@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,19 +11,19 @@ const StatsPanel = () => {
   const { t } = useLanguage();
   
   const stats = {
-    STR: { current: 180, max: 1000, description: "Kekuatan fisik dan daya tahan" },
-    DEX: { current: 150, max: 1000, description: "Kelincahan dan koordinasi" },
-    INT: { current: 220, max: 1000, description: "Pengetahuan dan kemampuan belajar" },
-    WIS: { current: 200, max: 1000, description: "Kebijaksanaan dan pengambilan keputusan" },
-    CHA: { current: 160, max: 1000, description: "Keterampilan sosial dan pengaruh" },
-    CON: { current: 140, max: 1000, description: "Daya tahan dan stamina" }
+    STR: { current: 180, max: 1000, description: t('stats.str.description') },
+    DEX: { current: 150, max: 1000, description: t('stats.dex.description') },
+    INT: { current: 220, max: 1000, description: t('stats.int.description') },
+    WIS: { current: 200, max: 1000, description: t('stats.wis.description') },
+    CHA: { current: 160, max: 1000, description: t('stats.cha.description') },
+    CON: { current: 140, max: 1000, description: t('stats.con.description') }
   };
 
   const playerData = {
     experience: 12450,
     experienceToNext: 15000,
     level: 15,
-    rank: 'Expert',
+    rank: 'B+',
     rankProgress: 65
   };
 
@@ -39,28 +38,33 @@ const StatsPanel = () => {
   const [moodData] = useState({
     currentMood: 'happy',
     moodHistory: [
-      { day: 'Sen', mood: 'happy', value: 8 },
-      { day: 'Sel', mood: 'neutral', value: 6 },
-      { day: 'Rab', mood: 'happy', value: 9 },
-      { day: 'Kam', mood: 'sad', value: 4 },
-      { day: 'Jum', mood: 'happy', value: 8 },
-      { day: 'Sab', mood: 'happy', value: 9 },
-      { day: 'Min', mood: 'neutral', value: 7 }
+      { day: t('common.days.mon'), mood: 'happy', value: 8 },
+      { day: t('common.days.tue'), mood: 'neutral', value: 6 },
+      { day: t('common.days.wed'), mood: 'happy', value: 9 },
+      { day: t('common.days.thu'), mood: 'sad', value: 4 },
+      { day: t('common.days.fri'), mood: 'happy', value: 8 },
+      { day: t('common.days.sat'), mood: 'happy', value: 9 },
+      { day: t('common.days.sun'), mood: 'neutral', value: 7 }
     ]
   });
 
   const getRankBadge = (rank: string) => {
-    const rankColors = {
-      'Novice': 'bg-gray-500/20 text-gray-300 border-gray-500/30',
-      'Apprentice': 'bg-green-500/20 text-green-300 border-green-500/30',
-      'Journeyman': 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-      'Expert': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-      'Master': 'bg-orange-500/20 text-orange-300 border-orange-500/30',
-      'Grand Master': 'bg-red-500/20 text-red-300 border-red-500/30',
-      'Legend': 'bg-gradient-to-r from-yellow-400 to-purple-600 text-white border-none'
+    const rankStyles = {
+      'SS': 'bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white font-black border-none shadow-[0_0_20px_rgba(255,215,0,0.8)] animate-pulse',
+      'S': 'bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold border-none shadow-[0_0_15px_rgba(147,51,234,0.7)]',
+      'A+': 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold border-none shadow-[0_0_12px_rgba(59,130,246,0.6)]',
+      'A': 'bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold border-none shadow-[0_0_10px_rgba(59,130,246,0.5)]',
+      'B+': 'bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold border-none shadow-[0_0_8px_rgba(34,197,94,0.5)]',
+      'B': 'bg-gradient-to-r from-green-400 to-green-500 text-white font-medium border-none shadow-[0_0_6px_rgba(34,197,94,0.4)]',
+      'C+': 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-medium border-none shadow-[0_0_6px_rgba(245,158,11,0.4)]',
+      'C': 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-medium border-none shadow-[0_0_4px_rgba(245,158,11,0.3)]',
+      'D+': 'bg-gradient-to-r from-gray-500 to-gray-600 text-white font-normal border-none',
+      'D': 'bg-gradient-to-r from-gray-400 to-gray-500 text-white font-normal border-none',
+      'F+': 'bg-gradient-to-r from-red-400 to-red-500 text-white font-normal border-none',
+      'F-': 'bg-gradient-to-r from-red-600 to-red-700 text-white font-normal border-none'
     };
     
-    return rankColors[rank] || rankColors['Novice'];
+    return rankStyles[rank] || rankStyles['F-'];
   };
 
   const getMoodIcon = (mood: string) => {
@@ -82,7 +86,7 @@ const StatsPanel = () => {
 
   const chartConfig = {
     value: {
-      label: "Nilai Saat Ini",
+      label: t('stats.currentValue'),
       color: "hsl(var(--primary))",
     },
   };
@@ -108,7 +112,7 @@ const StatsPanel = () => {
               className="h-2 mt-2" 
             />
             <div className="text-xs text-muted-foreground mt-1">
-              {(playerData.experienceToNext - playerData.experience).toLocaleString()} to next level
+              {(playerData.experienceToNext - playerData.experience).toLocaleString()} {t('stats.toNextLevel')}
             </div>
           </CardContent>
         </Card>
@@ -127,7 +131,7 @@ const StatsPanel = () => {
           <CardContent className="p-4 text-center">
             <Crown className="w-8 h-8 mx-auto mb-2 text-purple-400" />
             <Badge variant="outline" className={`${getRankBadge(playerData.rank)} font-orbitron text-sm px-3 py-1`}>
-              {t(`stats.rank.${playerData.rank.toLowerCase().replace(' ', '')}`)}
+              {playerData.rank}
             </Badge>
             <div className="text-sm text-muted-foreground mt-2">{t('stats.rank')}</div>
             <Progress value={playerData.rankProgress} className="h-2 mt-2" />
@@ -164,7 +168,7 @@ const StatsPanel = () => {
                 className="text-muted-foreground"
               />
               <Radar
-                name="Nilai"
+                name={t('stats.value')}
                 dataKey="value"
                 stroke="hsl(var(--primary))"
                 fill="hsl(var(--primary))"
@@ -176,7 +180,7 @@ const StatsPanel = () => {
                 content={<ChartTooltipContent />}
                 formatter={(value, name, props) => [
                   `${value}/${props.payload.fullMark}`,
-                  'Nilai'
+                  t('stats.value')
                 ]}
                 labelFormatter={(label, payload) => {
                   const item = payload?.[0]?.payload;
@@ -213,9 +217,9 @@ const StatsPanel = () => {
               <div className="text-2xl font-orbitron font-bold text-primary">
                 {weeklyProgress.questsCompleted}
               </div>
-              <div className="text-sm text-muted-foreground">Quest Selesai</div>
+              <div className="text-sm text-muted-foreground">{t('stats.questsCompleted')}</div>
               <div className="text-xs text-muted-foreground mt-1">
-                Target: {weeklyProgress.questsTarget}
+                {t('stats.target')}: {weeklyProgress.questsTarget}
               </div>
             </div>
           </div>
@@ -225,8 +229,8 @@ const StatsPanel = () => {
               <div className="text-2xl font-orbitron font-bold text-green-400">
                 {weeklyProgress.xpGained}
               </div>
-              <div className="text-sm text-muted-foreground">XP Diperoleh</div>
-              <div className="text-xs text-green-400 mt-1">+12% dari minggu lalu</div>
+              <div className="text-sm text-muted-foreground">{t('stats.xpGained')}</div>
+              <div className="text-xs text-green-400 mt-1">{t('stats.weeklyIncrease')}</div>
             </div>
           </div>
 
@@ -235,8 +239,8 @@ const StatsPanel = () => {
               <div className="text-2xl font-orbitron font-bold text-yellow-400">
                 {weeklyProgress.goldEarned}
               </div>
-              <div className="text-sm text-muted-foreground">Gold Diperoleh</div>
-              <div className="text-xs text-yellow-400 mt-1">+8% efisiensi</div>
+              <div className="text-sm text-muted-foreground">{t('stats.goldEarned')}</div>
+              <div className="text-xs text-yellow-400 mt-1">{t('stats.efficiency')}</div>
             </div>
           </div>
 
@@ -245,8 +249,8 @@ const StatsPanel = () => {
               <div className="text-2xl font-orbitron font-bold text-orange-400">
                 {weeklyProgress.streakDays}
               </div>
-              <div className="text-sm text-muted-foreground">Streak Hari</div>
-              <div className="text-xs text-orange-400 mt-1">Rekor pribadi!</div>
+              <div className="text-sm text-muted-foreground">{t('stats.streakDays')}</div>
+              <div className="text-xs text-orange-400 mt-1">{t('stats.personalRecord')}</div>
             </div>
           </div>
         </div>
