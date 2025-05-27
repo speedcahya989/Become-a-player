@@ -139,21 +139,30 @@ const ShopTabs = () => {
       const itemData = {
         ...itemForm,
         id: editingItem ? editingItem.id : Date.now(),
-        canEdit: true
+        canEdit: true,
+        ...(itemForm.category === 'powerup' ? { cooldown: "Weekly", lastPurchased: null } : {})
       };
 
       if (editingItem) {
         if (itemForm.category === 'reward') {
           setRewards(prev => prev.map(r => r.id === editingItem.id ? itemData : r));
         } else {
-          setPowerups(prev => prev.map(p => p.id === editingItem.id ? itemData : p));
+          setPowerups(prev => prev.map(p => p.id === editingItem.id ? {
+            ...itemData,
+            cooldown: p.cooldown,
+            lastPurchased: p.lastPurchased
+          } : p));
         }
         setEditingItem(null);
       } else {
         if (itemForm.category === 'reward') {
           setRewards(prev => [...prev, itemData]);
         } else {
-          setPowerups(prev => [...prev, { ...itemData, cooldown: "Weekly", lastPurchased: null }]);
+          setPowerups(prev => [...prev, { 
+            ...itemData,
+            cooldown: "Weekly",
+            lastPurchased: null
+          }]);
         }
       }
 

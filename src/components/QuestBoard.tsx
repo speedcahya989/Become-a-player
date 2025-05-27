@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { Plus, Edit2, Trash2, Zap, Coins, Dumbbell, Brain, Users, Eye, Heart } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import QuestCard from './QuestCard';
+
+type QuestType = 'daily' | 'weekly' | 'main' | 'event';
 
 const QuestBoard = () => {
   const { t } = useLanguage();
@@ -101,7 +102,7 @@ const QuestBoard = () => {
     difficulty: 'Mudah',
     statBonus: 'STR',
     statValue: 1,
-    type: 'daily',
+    type: 'daily' as QuestType,
     duration: 1,
     expireHour: '00:00',
     expireDate: '',
@@ -116,7 +117,7 @@ const QuestBoard = () => {
       difficulty: 'Mudah',
       statBonus: 'STR',
       statValue: 1,
-      type: 'daily',
+      type: 'daily' as QuestType,
       duration: 1,
       expireHour: '00:00',
       expireDate: '',
@@ -140,7 +141,7 @@ const QuestBoard = () => {
       const questData = {
         ...questForm,
         id: editingQuest ? editingQuest.id : Date.now(),
-        status: 'active',
+        status: 'active' as const,
         timeLeft: `${questForm.expireHour}`,
         isDefault: editingQuest?.isDefault || false
       };
@@ -149,7 +150,7 @@ const QuestBoard = () => {
         if (editingQuest.isDefault) {
           setDefaultQuests(prev => ({
             ...prev,
-            [questForm.type]: prev[questForm.type as keyof typeof prev].map(q => 
+            [questForm.type]: prev[questForm.type].map(q => 
               q.id === editingQuest.id ? questData : q
             )
           }));
@@ -175,7 +176,7 @@ const QuestBoard = () => {
       difficulty: quest.difficulty,
       statBonus: quest.statBonus || 'STR',
       statValue: quest.statValue || 1,
-      type: quest.type || 'daily',
+      type: quest.type as QuestType || 'daily',
       duration: quest.duration || 1,
       expireHour: quest.expireHour || '00:00',
       expireDate: quest.expireDate || '',
@@ -330,7 +331,7 @@ const QuestBoard = () => {
                   <select 
                     id="quest-type"
                     value={questForm.type}
-                    onChange={(e) => setQuestForm(prev => ({ ...prev, type: e.target.value }))}
+                    onChange={(e) => setQuestForm(prev => ({ ...prev, type: e.target.value as QuestType }))}
                     className="w-full p-2 bg-background border border-border rounded-md"
                   >
                     <option value="daily">{t('quest.daily')}</option>
@@ -446,7 +447,7 @@ const QuestBoard = () => {
           <TabsTrigger value="event" className="font-orbitron">{t('quest.event')}</TabsTrigger>
         </TabsList>
 
-        {['daily', 'weekly', 'main', 'event'].map(tabValue => (
+        {(['daily', 'weekly', 'main', 'event'] as QuestType[]).map(tabValue => (
           <TabsContent key={tabValue} value={tabValue} className="mt-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
