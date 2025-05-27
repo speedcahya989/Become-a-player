@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = 'id' | 'en';
@@ -194,6 +193,16 @@ const translations = {
     'common.days.fri': 'Jum',
     'common.days.sat': 'Sab',
     'common.days.sun': 'Min',
+    
+    // AI Assistant
+    'aiAssistant': {
+      title: "AI Assistant",
+      placeholder: "Tanya apa saja...",
+      quickTips: "Tips Quest",
+      progress: "Progress", 
+      motivation: "Motivasi",
+      welcome: "Halo! Saya AI Assistant Anda. Saya bisa membantu dengan strategi quest, analisis progress, dan tips motivasi. Bagaimana saya bisa membantu Anda hari ini?"
+    }
   },
   en: {
     // Header
@@ -379,6 +388,16 @@ const translations = {
     'common.days.fri': 'Fri',
     'common.days.sat': 'Sat',
     'common.days.sun': 'Sun',
+    
+    // AI Assistant
+    'aiAssistant': {
+      title: "AI Assistant",
+      placeholder: "Ask me anything...",
+      quickTips: "Quest Tips", 
+      progress: "Progress",
+      motivation: "Motivation",
+      welcome: "Hello! I'm your AI Assistant. I can help you with quest strategies, progress analysis, and motivation tips. How can I help you today?"
+    }
   }
 };
 

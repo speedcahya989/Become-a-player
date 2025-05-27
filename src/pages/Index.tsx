@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import PlayerProfile from '../components/PlayerProfile';
 import QuestBoard from '../components/QuestBoard';
@@ -9,6 +8,7 @@ import Settings from '../components/Settings';
 import AchievementSettings from '../components/AchievementSettings';
 import ProgressTracker from '../components/ProgressTracker';
 import BuffDebuffList from '../components/BuffDebuffList';
+import AIAssistant from '../components/AIAssistant';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -126,12 +126,14 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="glass rounded-lg p-4">
+            <div className="glass rounded-lg p-4 mb-4">
               <h3 className="font-orbitron font-bold mb-3">Ringkasan Harian</h3>
               <div className="text-sm text-muted-foreground">
                 <p>Progress yang bagus hari ini! Kamu berada di jalur yang tepat untuk mencapai target mingguan.</p>
               </div>
             </div>
+
+            <AIAssistant />
           </div>
         </div>
       </div>
