@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Clock, Star, Play, Pause, Square } from 'lucide-react';
+import { Clock, Star, Play, Pause, Square, Bot } from 'lucide-react';
 import { playSound, showNotification } from '../utils/gameUtils';
 
 interface Quest {
@@ -16,6 +16,7 @@ interface Quest {
   difficulty: 'Mudah' | 'Sedang' | 'Sulit';
   statBonus: string;
   duration?: number; // in minutes
+  isAIGenerated?: boolean;
 }
 
 interface QuestCardProps {
@@ -120,6 +121,12 @@ const QuestCard: React.FC<QuestCardProps> = ({ quest, type }) => {
             <Badge variant="secondary" className={getTypeColor(type)}>
               {getTypeLabel(type)}
             </Badge>
+            {quest.isAIGenerated && (
+              <Badge variant="secondary" className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30">
+                <Bot className="w-3 h-3 mr-1" />
+                AI
+              </Badge>
+            )}
           </div>
           <p className="text-muted-foreground text-sm mb-2">{quest.description}</p>
           <p className="text-xs text-accent">{quest.statBonus}</p>

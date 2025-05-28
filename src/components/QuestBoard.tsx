@@ -28,7 +28,8 @@ const QuestBoard = () => {
         difficulty: "Mudah" as const,
         statBonus: "STR",
         statValue: 1,
-        isDefault: true
+        isDefault: true,
+        isAIGenerated: false
       },
       {
         id: 2,
@@ -41,7 +42,8 @@ const QuestBoard = () => {
         difficulty: "Mudah" as const,
         statBonus: "INT",
         statValue: 1,
-        isDefault: true
+        isDefault: true,
+        isAIGenerated: false
       }
     ],
     weekly: [
@@ -56,7 +58,8 @@ const QuestBoard = () => {
         difficulty: "Sedang" as const,
         statBonus: "INT",
         statValue: 3,
-        isDefault: true
+        isDefault: true,
+        isAIGenerated: false
       }
     ],
     main: [
@@ -71,7 +74,8 @@ const QuestBoard = () => {
         difficulty: "Sulit" as const,
         statBonus: "INT",
         statValue: 10,
-        isDefault: true
+        isDefault: true,
+        isAIGenerated: false
       }
     ],
     event: [
@@ -86,7 +90,8 @@ const QuestBoard = () => {
         difficulty: "Sedang" as const,
         statBonus: "WIS",
         statValue: 5,
-        isDefault: true
+        isDefault: true,
+        isAIGenerated: false
       }
     ]
   });
@@ -106,6 +111,7 @@ const QuestBoard = () => {
     duration: 1,
     expireHour: '00:00',
     expireDate: '',
+    isAIGenerated: false,
   });
 
   const resetForm = () => {
@@ -121,6 +127,7 @@ const QuestBoard = () => {
       duration: 1,
       expireHour: '00:00',
       expireDate: '',
+      isAIGenerated: false,
     });
   };
 
@@ -180,6 +187,7 @@ const QuestBoard = () => {
       duration: quest.duration || 1,
       expireHour: quest.expireHour || '00:00',
       expireDate: quest.expireDate || '',
+      isAIGenerated: quest.isAIGenerated || false,
     });
     setEditingQuest(quest);
     setIsAddingQuest(true);
@@ -352,6 +360,16 @@ const QuestBoard = () => {
                     <option value="Sedang">{t('quest.difficulty.medium')}</option>
                     <option value="Sulit">{t('quest.difficulty.hard')}</option>
                   </select>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="ai-generated"
+                    checked={questForm.isAIGenerated}
+                    onChange={(e) => setQuestForm(prev => ({ ...prev, isAIGenerated: e.target.checked }))}
+                    className="rounded border border-border"
+                  />
+                  <Label htmlFor="ai-generated" className="text-sm">Quest dibuat oleh AI</Label>
                 </div>
               </div>
               
