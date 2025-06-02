@@ -185,6 +185,17 @@ export default {
 					'100%': {
 						boxShadow: '0 0 3px rgba(6, 182, 212, 0.3)'
 					}
+				},
+				'glow-text-slow': {
+					'0%': {
+						textShadow: '0 0 2px currentColor'
+					},
+					'50%': {
+						textShadow: '0 0 6px currentColor, 0 0 8px currentColor'
+					},
+					'100%': {
+						textShadow: '0 0 2px currentColor'
+					}
 				}
 			},
 			animation: {
@@ -198,7 +209,8 @@ export default {
 				'slide-in-futuristic': 'slide-in-futuristic 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
 				'hologram-pulse': 'hologram-pulse 2s ease-in-out infinite',
 				'subtle-glow-rank': 'subtle-glow-rank 3s ease-in-out infinite',
-				'subtle-glow-xp': 'subtle-glow-xp 4s ease-in-out infinite'
+				'subtle-glow-xp': 'subtle-glow-xp 4s ease-in-out infinite',
+				'glow-text-slow': 'glow-text-slow 5s ease-in-out infinite'
 			}
 		}
 	},

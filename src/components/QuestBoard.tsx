@@ -114,7 +114,122 @@ const QuestBoard = () => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-orbitron font-bold hologram-text mb-2">{t('quest.title')}</h2>
+        <div className="flex items-center justify-center gap-4">
+          <h2 className="text-3xl font-orbitron font-bold hologram-text mb-2">{t('quest.title')}</h2>
+          <Dialog open={isAddingQuest} onOpenChange={(open) => {
+            setIsAddingQuest(open);
+            if (!open) resetForm();
+          }}>
+            <DialogTrigger asChild>
+              <Button className="font-orbitron">
+                <Plus className="w-4 h-4 mr-2" />
+                Tambah Quest
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="glass">
+              <DialogHeader>
+                <DialogTitle className="font-orbitron">{t('quest.addQuest')}</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="quest-title">{t('quest.form.title')}</Label>
+                  <Input
+                    id="quest-title"
+                    value={questForm.title}
+                    onChange={(e) => setQuestForm(prev => ({ ...prev, title: e.target.value }))}
+                    placeholder={t('quest.form.title')}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="quest-desc">{t('quest.form.description')}</Label>
+                  <Textarea
+                    id="quest-desc"
+                    value={questForm.description}
+                    onChange={(e) => setQuestForm(prev => ({ ...prev, description: e.target.value }))}
+                    placeholder={t('quest.form.description')}
+                    rows={3}
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="quest-category">{t('quest.form.category')}</Label>
+                    <select 
+                      id="quest-category"
+                      value={questForm.category}
+                      onChange={(e) => setQuestForm(prev => ({ ...prev, category: e.target.value }))}
+                      className="w-full p-2 bg-background border border-border rounded-md"
+                    >
+                      <option value="daily">{t('quest.daily')}</option>
+                      <option value="weekly">{t('quest.weekly')}</option>
+                      <option value="monthly">{t('quest.monthly')}</option>
+                    </select>
+                  </div>
+                  <div>
+                    <Label htmlFor="quest-difficulty">{t('quest.form.difficulty')}</Label>
+                    <select 
+                      id="quest-difficulty"
+                      value={questForm.difficulty}
+                      onChange={(e) => setQuestForm(prev => ({ ...prev, difficulty: e.target.value }))}
+                      className="w-full p-2 bg-background border border-border rounded-md"
+                    >
+                      <option value="easy">Easy</option>
+                      <option value="medium">Medium</option>
+                      <option value="hard">Hard</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="quest-xp">{t('quest.form.xp')}</Label>
+                    <Input
+                      id="quest-xp"
+                      type="number"
+                      value={questForm.xp}
+                      onChange={(e) => setQuestForm(prev => ({ ...prev, xp: parseInt(e.target.value) || 0 }))}
+                      placeholder="50"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="quest-gold">{t('quest.form.gold')}</Label>
+                    <Input
+                      id="quest-gold"
+                      type="number"
+                      value={questForm.gold}
+                      onChange={(e) => setQuestForm(prev => ({ ...prev, gold: parseInt(e.target.value) || 0 }))}
+                      placeholder="25"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="quest-icon">{t('quest.form.icon')}</Label>
+                    <Input
+                      id="quest-icon"
+                      value={questForm.icon}
+                      onChange={(e) => setQuestForm(prev => ({ ...prev, icon: e.target.value }))}
+                      placeholder="🎯"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="quest-deadline">{t('quest.form.deadline')}</Label>
+                  <Input
+                    id="quest-deadline"
+                    type="date"
+                    value={questForm.deadline}
+                    onChange={(e) => setQuestForm(prev => ({ ...prev, deadline: e.target.value }))}
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={handleSaveQuest} className="flex-1">
+                    {t('button.add')} Quest
+                  </Button>
+                  <Button variant="outline" onClick={() => setIsAddingQuest(false)}>
+                    {t('button.cancel')}
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
         <p className="text-muted-foreground">{t('quest.subtitle')}</p>
       </div>
 
@@ -186,123 +301,6 @@ const QuestBoard = () => {
                     </div>
                   </div>
                 ))}
-              </div>
-
-              {/* Add Quest Button - moved to bottom */}
-              <div className="flex justify-center pt-4">
-                <Dialog open={isAddingQuest} onOpenChange={(open) => {
-                  setIsAddingQuest(open);
-                  if (!open) resetForm();
-                }}>
-                  <DialogTrigger asChild>
-                    <Button className="font-orbitron">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Tambah Quest
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="glass">
-                    <DialogHeader>
-                      <DialogTitle className="font-orbitron">{t('quest.addQuest')}</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="quest-title">{t('quest.form.title')}</Label>
-                        <Input
-                          id="quest-title"
-                          value={questForm.title}
-                          onChange={(e) => setQuestForm(prev => ({ ...prev, title: e.target.value }))}
-                          placeholder={t('quest.form.title')}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="quest-desc">{t('quest.form.description')}</Label>
-                        <Textarea
-                          id="quest-desc"
-                          value={questForm.description}
-                          onChange={(e) => setQuestForm(prev => ({ ...prev, description: e.target.value }))}
-                          placeholder={t('quest.form.description')}
-                          rows={3}
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="quest-category">{t('quest.form.category')}</Label>
-                          <select 
-                            id="quest-category"
-                            value={questForm.category}
-                            onChange={(e) => setQuestForm(prev => ({ ...prev, category: e.target.value }))}
-                            className="w-full p-2 bg-background border border-border rounded-md"
-                          >
-                            <option value="daily">{t('quest.daily')}</option>
-                            <option value="weekly">{t('quest.weekly')}</option>
-                            <option value="monthly">{t('quest.monthly')}</option>
-                          </select>
-                        </div>
-                        <div>
-                          <Label htmlFor="quest-difficulty">{t('quest.form.difficulty')}</Label>
-                          <select 
-                            id="quest-difficulty"
-                            value={questForm.difficulty}
-                            onChange={(e) => setQuestForm(prev => ({ ...prev, difficulty: e.target.value }))}
-                            className="w-full p-2 bg-background border border-border rounded-md"
-                          >
-                            <option value="easy">Easy</option>
-                            <option value="medium">Medium</option>
-                            <option value="hard">Hard</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-3 gap-4">
-                        <div>
-                          <Label htmlFor="quest-xp">{t('quest.form.xp')}</Label>
-                          <Input
-                            id="quest-xp"
-                            type="number"
-                            value={questForm.xp}
-                            onChange={(e) => setQuestForm(prev => ({ ...prev, xp: parseInt(e.target.value) || 0 }))}
-                            placeholder="50"
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="quest-gold">{t('quest.form.gold')}</Label>
-                          <Input
-                            id="quest-gold"
-                            type="number"
-                            value={questForm.gold}
-                            onChange={(e) => setQuestForm(prev => ({ ...prev, gold: parseInt(e.target.value) || 0 }))}
-                            placeholder="25"
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="quest-icon">{t('quest.form.icon')}</Label>
-                          <Input
-                            id="quest-icon"
-                            value={questForm.icon}
-                            onChange={(e) => setQuestForm(prev => ({ ...prev, icon: e.target.value }))}
-                            placeholder="🎯"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <Label htmlFor="quest-deadline">{t('quest.form.deadline')}</Label>
-                        <Input
-                          id="quest-deadline"
-                          type="date"
-                          value={questForm.deadline}
-                          onChange={(e) => setQuestForm(prev => ({ ...prev, deadline: e.target.value }))}
-                        />
-                      </div>
-                      <div className="flex gap-2">
-                        <Button onClick={handleSaveQuest} className="flex-1">
-                          {t('button.add')} Quest
-                        </Button>
-                        <Button variant="outline" onClick={() => setIsAddingQuest(false)}>
-                          {t('button.cancel')}
-                        </Button>
-                      </div>
-                    </div>
-                  </DialogContent>
-                </Dialog>
               </div>
             </div>
           </TabsContent>

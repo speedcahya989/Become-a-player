@@ -5,7 +5,6 @@ import { Progress } from '@/components/ui/progress';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { useLanguage } from '../contexts/LanguageContext';
-import { getRankColors } from '../utils/rankUtils';
 
 const StatsPanel = () => {
   const { t } = useLanguage();
@@ -47,8 +46,6 @@ const StatsPanel = () => {
     }
   };
 
-  const { backgroundColor, textColor, shadow } = getRankColors(playerStats.rank);
-
   return (
     <div className="space-y-6">
       <div className="text-center">
@@ -62,13 +59,7 @@ const StatsPanel = () => {
           <Badge variant="outline" className="font-orbitron text-lg px-4 py-2">
             {t('stats.level')} {playerStats.level}
           </Badge>
-          <Badge 
-            variant="secondary" 
-            className={`font-orbitron font-bold text-2xl px-8 py-3 border-3 ${backgroundColor} ${textColor} animate-subtle-glow-rank`}
-            style={{ 
-              boxShadow: `0 0 15px ${getRankColors(playerStats.rank).shadowColor}, inset 0 0 8px ${getRankColors(playerStats.rank).shadowColor}` 
-            }}
-          >
+          <Badge variant="secondary" className="font-orbitron text-lg px-4 py-2">
             {playerStats.rank}
           </Badge>
         </div>
@@ -101,9 +92,9 @@ const StatsPanel = () => {
               <div key={statName} className="space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="font-orbitron font-bold">{statName}</span>
-                  <span className="text-primary font-bold">{value}/1000</span>
+                  <span className="text-primary font-bold">{value}/50</span>
                 </div>
-                <Progress value={(value / 1000) * 100} className="h-2" />
+                <Progress value={(value / 50) * 100} className="h-2" />
               </div>
             ))}
           </div>
