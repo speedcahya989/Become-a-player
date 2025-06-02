@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import PlayerProfile from '../components/PlayerProfile';
 import QuestBoard from '../components/QuestBoard';
@@ -9,6 +10,7 @@ import AchievementSettings from '../components/AchievementSettings';
 import ProgressTracker from '../components/ProgressTracker';
 import BuffDebuffList from '../components/BuffDebuffList';
 import AIAssistant from '../components/AIAssistant';
+import About from '../components/About';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -46,63 +48,70 @@ const Index = () => {
           {/* Main Content */}
           <div className="lg:col-span-2">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-6 glass">
-                <TabsTrigger value="quests" className="font-orbitron text-xs">{t('tab.quest')}</TabsTrigger>
-                <TabsTrigger value="shop" className="font-orbitron text-xs">{t('tab.shop')}</TabsTrigger>
-                <TabsTrigger value="stats" className="font-orbitron text-xs">{t('tab.stats')}</TabsTrigger>
-                <TabsTrigger value="achievements" className="font-orbitron text-xs">{t('tab.achievements')}</TabsTrigger>
-                <TabsTrigger value="buffs" className="font-orbitron text-xs">{t('tab.buffs')}</TabsTrigger>
-                <TabsTrigger value="settings" className="font-orbitron text-xs">{t('tab.settings')}</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-7 glass">
+                <TabsTrigger value="quests" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.quest')}</TabsTrigger>
+                <TabsTrigger value="shop" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.shop')}</TabsTrigger>
+                <TabsTrigger value="stats" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.stats')}</TabsTrigger>
+                <TabsTrigger value="achievements" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.achievements')}</TabsTrigger>
+                <TabsTrigger value="buffs" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.buffs')}</TabsTrigger>
+                <TabsTrigger value="settings" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.settings')}</TabsTrigger>
+                <TabsTrigger value="about" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.about')}</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="quests" className="mt-6">
-                <QuestBoard />
-              </TabsContent>
+              <div className="mt-6 overflow-hidden">
+                <TabsContent value="quests" className="animate-fade-in">
+                  <QuestBoard />
+                </TabsContent>
 
-              <TabsContent value="shop" className="mt-6">
-                <ShopTabs />
-              </TabsContent>
+                <TabsContent value="shop" className="animate-fade-in">
+                  <ShopTabs />
+                </TabsContent>
 
-              <TabsContent value="stats" className="mt-6">
-                <Tabs defaultValue="stats" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2 glass mb-4">
-                    <TabsTrigger value="stats" className="font-orbitron">{t('stats.title')}</TabsTrigger>
-                    <TabsTrigger value="progress" className="font-orbitron">{t('stats.progress')}</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="stats">
-                    <StatsPanel />
-                  </TabsContent>
-                  <TabsContent value="progress">
-                    <ProgressTracker />
-                  </TabsContent>
-                </Tabs>
-              </TabsContent>
+                <TabsContent value="stats" className="animate-fade-in">
+                  <Tabs defaultValue="stats" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2 glass mb-4">
+                      <TabsTrigger value="stats" className="font-orbitron transition-all duration-200 hover:scale-105">{t('stats.title')}</TabsTrigger>
+                      <TabsTrigger value="progress" className="font-orbitron transition-all duration-200 hover:scale-105">{t('stats.progress')}</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="stats" className="animate-scale-in">
+                      <StatsPanel />
+                    </TabsContent>
+                    <TabsContent value="progress" className="animate-scale-in">
+                      <ProgressTracker />
+                    </TabsContent>
+                  </Tabs>
+                </TabsContent>
 
-              <TabsContent value="achievements" className="mt-6">
-                <Tabs defaultValue="achievements" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2 glass mb-4">
-                    <TabsTrigger value="achievements" className="font-orbitron">Prestasi</TabsTrigger>
-                    <TabsTrigger value="achievement-settings" className="font-orbitron">Pengaturan Prestasi</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="achievements">
-                    <div className="glass rounded-lg p-6">
-                      <h3 className="text-xl font-orbitron font-bold mb-4">Sistem Prestasi</h3>
-                      <p className="text-muted-foreground">Sistem prestasi akan segera hadir...</p>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="achievement-settings">
-                    <AchievementSettings />
-                  </TabsContent>
-                </Tabs>
-              </TabsContent>
+                <TabsContent value="achievements" className="animate-fade-in">
+                  <Tabs defaultValue="achievements" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2 glass mb-4">
+                      <TabsTrigger value="achievements" className="font-orbitron transition-all duration-200 hover:scale-105">Prestasi</TabsTrigger>
+                      <TabsTrigger value="achievement-settings" className="font-orbitron transition-all duration-200 hover:scale-105">Pengaturan Prestasi</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="achievements" className="animate-scale-in">
+                      <div className="glass rounded-lg p-6">
+                        <h3 className="text-xl font-orbitron font-bold mb-4">Sistem Prestasi</h3>
+                        <p className="text-muted-foreground">Sistem prestasi akan segera hadir...</p>
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="achievement-settings" className="animate-scale-in">
+                      <AchievementSettings />
+                    </TabsContent>
+                  </Tabs>
+                </TabsContent>
 
-              <TabsContent value="buffs" className="mt-6">
-                <BuffDebuffList />
-              </TabsContent>
+                <TabsContent value="buffs" className="animate-fade-in">
+                  <BuffDebuffList />
+                </TabsContent>
 
-              <TabsContent value="settings" className="mt-6">
-                <Settings />
-              </TabsContent>
+                <TabsContent value="settings" className="animate-fade-in">
+                  <Settings />
+                </TabsContent>
+
+                <TabsContent value="about" className="animate-fade-in">
+                  <About />
+                </TabsContent>
+              </div>
             </Tabs>
           </div>
 

@@ -27,6 +27,7 @@ const translations = {
     'tab.achievements': 'Prestasi',
     'tab.buffs': 'Buff/Debuff',
     'tab.settings': 'Setting',
+    'tab.about': 'Tentang',
     
     // Quest
     'quest.add': 'Tambah Quest',
@@ -202,7 +203,21 @@ const translations = {
       progress: "Progress", 
       motivation: "Motivasi",
       welcome: "Halo! Saya AI Assistant Anda. Saya bisa membantu dengan strategi quest, analisis progress, dan tips motivasi. Bagaimana saya bisa membantu Anda hari ini?"
-    }
+    },
+    
+    // About
+    'about.title': 'Tentang Aplikasi',
+    'about.subtitle': 'Become A Player - Gamifikasi Kehidupan',
+    'about.description': 'Aplikasi ini dirancang untuk membantu Anda mengubah rutinitas harian menjadi petualangan yang menyenangkan. Dengan sistem quest, level, dan reward, Anda dapat meningkatkan motivasi dan produktivitas dalam mencapai tujuan hidup.',
+    'about.features': 'Fitur Utama',
+    'about.feature.quest': 'Sistem Quest Harian, Mingguan, dan Utama',
+    'about.feature.leveling': 'Sistem Leveling dengan XP dan Stats',
+    'about.feature.rewards': 'Toko Reward untuk Motivasi',
+    'about.feature.buffs': 'Sistem Buff & Debuff',
+    'about.feature.ai': 'AI Assistant untuk Bantuan Personal',
+    'about.feature.multilingual': 'Dukungan Multi-bahasa',
+    'about.version': 'Versi',
+    'about.developer': 'Dikembangkan dengan ❤️ menggunakan React & Tailwind CSS',
   },
   en: {
     // Header
@@ -222,6 +237,7 @@ const translations = {
     'tab.achievements': 'Achievements',
     'tab.buffs': 'Buff/Debuff',
     'tab.settings': 'Settings',
+    'tab.about': 'About',
     
     // Quest
     'quest.add': 'Add Quest',
@@ -397,7 +413,21 @@ const translations = {
       progress: "Progress",
       motivation: "Motivation",
       welcome: "Hello! I'm your AI Assistant. I can help you with quest strategies, progress analysis, and motivation tips. How can I help you today?"
-    }
+    },
+    
+    // About
+    'about.title': 'About Application',
+    'about.subtitle': 'Become A Player - Life Gamification',
+    'about.description': 'This application is designed to help you turn daily routines into fun adventures. With quest systems, levels, and rewards, you can increase motivation and productivity in achieving life goals.',
+    'about.features': 'Main Features',
+    'about.feature.quest': 'Daily, Weekly, and Main Quest System',
+    'about.feature.leveling': 'Leveling System with XP and Stats',
+    'about.feature.rewards': 'Reward Shop for Motivation',
+    'about.feature.buffs': 'Buff & Debuff System',
+    'about.feature.ai': 'AI Assistant for Personal Help',
+    'about.feature.multilingual': 'Multi-language Support',
+    'about.version': 'Version',
+    'about.developer': 'Developed with ❤️ using React & Tailwind CSS',
   }
 };
 
