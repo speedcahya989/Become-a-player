@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -81,8 +80,51 @@ const ShopSettings = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="text-center">
         <h2 className="text-2xl font-orbitron font-bold hologram-text">Pengaturan Toko</h2>
+      </div>
+
+      <div className="grid gap-4">
+        {customRewards.map(reward => (
+          <div key={reward.id} className="glass rounded-lg p-4">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2 flex-wrap">
+                  <span className="text-2xl">{reward.icon}</span>
+                  <h4 className="font-orbitron font-bold text-lg">{reward.name}</h4>
+                  <Badge variant="outline" className={getRarityColor(reward.rarity)}>
+                    {reward.rarity}
+                  </Badge>
+                  <Badge variant="secondary" className={reward.category === 'powerup' ? 'bg-purple-500/20 text-purple-400' : 'bg-green-500/20 text-green-400'}>
+                    {reward.category.toUpperCase()}
+                  </Badge>
+                </div>
+                <p className="text-muted-foreground text-sm mb-2">{reward.description}</p>
+                <div className="flex gap-4 text-sm">
+                  <span className="text-yellow-400">Price: {reward.price} Gold</span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" onClick={() => handleEditReward(reward)}>
+                  <Edit2 className="w-3 h-3" />
+                </Button>
+                <Button size="sm" variant="destructive" onClick={() => handleDeleteReward(reward.id)}>
+                  <Trash2 className="w-3 h-3" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        {customRewards.length === 0 && (
+          <div className="text-center py-8 text-muted-foreground">
+            <p>Belum ada reward kustom. Tambahkan reward pertama Anda!</p>
+          </div>
+        )}
+      </div>
+
+      {/* Add Reward Button - Moved to Bottom */}
+      <div className="flex justify-center mt-8">
         <Dialog open={isAddingReward} onOpenChange={(open) => {
           setIsAddingReward(open);
           if (!open) {
@@ -91,7 +133,7 @@ const ShopSettings = () => {
           }
         }}>
           <DialogTrigger asChild>
-            <Button className="font-orbitron">
+            <Button className="font-orbitron" size="lg">
               <Plus className="w-4 h-4 mr-2" />
               Tambah Reward
             </Button>
@@ -182,45 +224,6 @@ const ShopSettings = () => {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
-
-      <div className="grid gap-4">
-        {customRewards.map(reward => (
-          <div key={reward.id} className="glass rounded-lg p-4">
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2 flex-wrap">
-                  <span className="text-2xl">{reward.icon}</span>
-                  <h4 className="font-orbitron font-bold text-lg">{reward.name}</h4>
-                  <Badge variant="outline" className={getRarityColor(reward.rarity)}>
-                    {reward.rarity}
-                  </Badge>
-                  <Badge variant="secondary" className={reward.category === 'powerup' ? 'bg-purple-500/20 text-purple-400' : 'bg-green-500/20 text-green-400'}>
-                    {reward.category.toUpperCase()}
-                  </Badge>
-                </div>
-                <p className="text-muted-foreground text-sm mb-2">{reward.description}</p>
-                <div className="flex gap-4 text-sm">
-                  <span className="text-yellow-400">Price: {reward.price} Gold</span>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Button size="sm" variant="outline" onClick={() => handleEditReward(reward)}>
-                  <Edit2 className="w-3 h-3" />
-                </Button>
-                <Button size="sm" variant="destructive" onClick={() => handleDeleteReward(reward.id)}>
-                  <Trash2 className="w-3 h-3" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        ))}
-        
-        {customRewards.length === 0 && (
-          <div className="text-center py-8 text-muted-foreground">
-            <p>Belum ada reward kustom. Tambahkan reward pertama Anda!</p>
-          </div>
-        )}
       </div>
     </div>
   );

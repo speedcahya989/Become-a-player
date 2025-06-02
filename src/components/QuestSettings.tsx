@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -99,8 +98,53 @@ const QuestSettings = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="text-center">
         <h2 className="text-2xl font-orbitron font-bold hologram-text">Pengaturan Quest</h2>
+      </div>
+
+      <div className="grid gap-4">
+        {customQuests.map(quest => (
+          <div key={quest.id} className="glass rounded-lg p-4">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2 flex-wrap">
+                  <h4 className="font-orbitron font-bold text-lg">{quest.title}</h4>
+                  <Badge variant="outline" className={getDifficultyColor(quest.difficulty)}>
+                    {quest.difficulty}
+                  </Badge>
+                  <Badge variant="secondary" className={getTypeColor(quest.type)}>
+                    {quest.type.toUpperCase()}
+                  </Badge>
+                </div>
+                <p className="text-muted-foreground text-sm mb-2">{quest.description}</p>
+                <div className="flex gap-4 text-sm">
+                  <span className="text-primary">XP: {quest.xpReward}</span>
+                  <span className="text-yellow-400">Gold: {quest.goldReward}</span>
+                  <span className="text-accent">{quest.statBonus}</span>
+                  <span className="text-muted-foreground">Durasi: {quest.duration}m</span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" onClick={() => handleEditQuest(quest)}>
+                  <Edit2 className="w-3 h-3" />
+                </Button>
+                <Button size="sm" variant="destructive" onClick={() => handleDeleteQuest(quest.id)}>
+                  <Trash2 className="w-3 h-3" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        {customQuests.length === 0 && (
+          <div className="text-center py-8 text-muted-foreground">
+            <p>Belum ada quest kustom. Tambahkan quest pertama Anda!</p>
+          </div>
+        )}
+      </div>
+
+      {/* Add Quest Button - Moved to Bottom */}
+      <div className="flex justify-center mt-8">
         <Dialog open={isAddingQuest} onOpenChange={(open) => {
           setIsAddingQuest(open);
           if (!open) {
@@ -109,7 +153,7 @@ const QuestSettings = () => {
           }
         }}>
           <DialogTrigger asChild>
-            <Button className="font-orbitron">
+            <Button className="font-orbitron" size="lg">
               <Plus className="w-4 h-4 mr-2" />
               Tambah Quest
             </Button>
@@ -236,47 +280,6 @@ const QuestSettings = () => {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
-
-      <div className="grid gap-4">
-        {customQuests.map(quest => (
-          <div key={quest.id} className="glass rounded-lg p-4">
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2 flex-wrap">
-                  <h4 className="font-orbitron font-bold text-lg">{quest.title}</h4>
-                  <Badge variant="outline" className={getDifficultyColor(quest.difficulty)}>
-                    {quest.difficulty}
-                  </Badge>
-                  <Badge variant="secondary" className={getTypeColor(quest.type)}>
-                    {quest.type.toUpperCase()}
-                  </Badge>
-                </div>
-                <p className="text-muted-foreground text-sm mb-2">{quest.description}</p>
-                <div className="flex gap-4 text-sm">
-                  <span className="text-primary">XP: {quest.xpReward}</span>
-                  <span className="text-yellow-400">Gold: {quest.goldReward}</span>
-                  <span className="text-accent">{quest.statBonus}</span>
-                  <span className="text-muted-foreground">Durasi: {quest.duration}m</span>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Button size="sm" variant="outline" onClick={() => handleEditQuest(quest)}>
-                  <Edit2 className="w-3 h-3" />
-                </Button>
-                <Button size="sm" variant="destructive" onClick={() => handleDeleteQuest(quest.id)}>
-                  <Trash2 className="w-3 h-3" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        ))}
-        
-        {customQuests.length === 0 && (
-          <div className="text-center py-8 text-muted-foreground">
-            <p>Belum ada quest kustom. Tambahkan quest pertama Anda!</p>
-          </div>
-        )}
       </div>
     </div>
   );

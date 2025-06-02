@@ -10,7 +10,6 @@ import AchievementSettings from '../components/AchievementSettings';
 import ProgressTracker from '../components/ProgressTracker';
 import BuffDebuffList from '../components/BuffDebuffList';
 import AIAssistant from '../components/AIAssistant';
-import About from '../components/About';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -48,26 +47,25 @@ const Index = () => {
           {/* Main Content */}
           <div className="lg:col-span-2">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-7 glass">
+              <TabsList className="grid w-full grid-cols-6 glass">
                 <TabsTrigger value="quests" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.quest')}</TabsTrigger>
                 <TabsTrigger value="shop" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.shop')}</TabsTrigger>
                 <TabsTrigger value="stats" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.stats')}</TabsTrigger>
                 <TabsTrigger value="achievements" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.achievements')}</TabsTrigger>
                 <TabsTrigger value="buffs" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.buffs')}</TabsTrigger>
                 <TabsTrigger value="settings" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.settings')}</TabsTrigger>
-                <TabsTrigger value="about" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.about')}</TabsTrigger>
               </TabsList>
 
               <div className="mt-6 overflow-hidden">
-                <TabsContent value="quests" className="animate-fade-in">
+                <TabsContent value="quests" className="animate-slide-in">
                   <QuestBoard />
                 </TabsContent>
 
-                <TabsContent value="shop" className="animate-fade-in">
+                <TabsContent value="shop" className="animate-slide-in">
                   <ShopTabs />
                 </TabsContent>
 
-                <TabsContent value="stats" className="animate-fade-in">
+                <TabsContent value="stats" className="animate-slide-in">
                   <Tabs defaultValue="stats" className="w-full">
                     <TabsList className="grid w-full grid-cols-2 glass mb-4">
                       <TabsTrigger value="stats" className="font-orbitron transition-all duration-200 hover:scale-105">{t('stats.title')}</TabsTrigger>
@@ -82,7 +80,7 @@ const Index = () => {
                   </Tabs>
                 </TabsContent>
 
-                <TabsContent value="achievements" className="animate-fade-in">
+                <TabsContent value="achievements" className="animate-slide-in">
                   <Tabs defaultValue="achievements" className="w-full">
                     <TabsList className="grid w-full grid-cols-2 glass mb-4">
                       <TabsTrigger value="achievements" className="font-orbitron transition-all duration-200 hover:scale-105">Prestasi</TabsTrigger>
@@ -100,16 +98,12 @@ const Index = () => {
                   </Tabs>
                 </TabsContent>
 
-                <TabsContent value="buffs" className="animate-fade-in">
+                <TabsContent value="buffs" className="animate-slide-in">
                   <BuffDebuffList />
                 </TabsContent>
 
-                <TabsContent value="settings" className="animate-fade-in">
+                <TabsContent value="settings" className="animate-slide-in">
                   <Settings />
-                </TabsContent>
-
-                <TabsContent value="about" className="animate-fade-in">
-                  <About />
                 </TabsContent>
               </div>
             </Tabs>
