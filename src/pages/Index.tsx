@@ -47,62 +47,57 @@ const Index = () => {
           {/* Main Content */}
           <div className="lg:col-span-2">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-6 glass">
+              <TabsList className="grid w-full grid-cols-5 glass">
                 <TabsTrigger value="quests" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.quest')}</TabsTrigger>
                 <TabsTrigger value="shop" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.shop')}</TabsTrigger>
                 <TabsTrigger value="stats" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.stats')}</TabsTrigger>
                 <TabsTrigger value="achievements" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.achievements')}</TabsTrigger>
-                <TabsTrigger value="buffs" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.buffs')}</TabsTrigger>
                 <TabsTrigger value="settings" className="font-orbitron text-xs transition-all duration-300 hover:scale-105">{t('tab.settings')}</TabsTrigger>
               </TabsList>
 
               <div className="mt-6 overflow-hidden">
-                <TabsContent value="quests" className="animate-slide-in">
+                <TabsContent value="quests" className="animate-fade-in">
                   <QuestBoard />
                 </TabsContent>
 
-                <TabsContent value="shop" className="animate-slide-in">
+                <TabsContent value="shop" className="animate-fade-in">
                   <ShopTabs />
                 </TabsContent>
 
-                <TabsContent value="stats" className="animate-slide-in">
+                <TabsContent value="stats" className="animate-fade-in">
                   <Tabs defaultValue="stats" className="w-full">
                     <TabsList className="grid w-full grid-cols-2 glass mb-4">
                       <TabsTrigger value="stats" className="font-orbitron transition-all duration-200 hover:scale-105">{t('stats.title')}</TabsTrigger>
                       <TabsTrigger value="progress" className="font-orbitron transition-all duration-200 hover:scale-105">{t('stats.progress')}</TabsTrigger>
                     </TabsList>
-                    <TabsContent value="stats" className="animate-scale-in">
+                    <TabsContent value="stats" className="animate-fade-in">
                       <StatsPanel />
                     </TabsContent>
-                    <TabsContent value="progress" className="animate-scale-in">
+                    <TabsContent value="progress" className="animate-fade-in">
                       <ProgressTracker />
                     </TabsContent>
                   </Tabs>
                 </TabsContent>
 
-                <TabsContent value="achievements" className="animate-slide-in">
+                <TabsContent value="achievements" className="animate-fade-in">
                   <Tabs defaultValue="achievements" className="w-full">
                     <TabsList className="grid w-full grid-cols-2 glass mb-4">
                       <TabsTrigger value="achievements" className="font-orbitron transition-all duration-200 hover:scale-105">Prestasi</TabsTrigger>
                       <TabsTrigger value="achievement-settings" className="font-orbitron transition-all duration-200 hover:scale-105">Pengaturan Prestasi</TabsTrigger>
                     </TabsList>
-                    <TabsContent value="achievements" className="animate-scale-in">
+                    <TabsContent value="achievements" className="animate-fade-in">
                       <div className="glass rounded-lg p-6">
                         <h3 className="text-xl font-orbitron font-bold mb-4">Sistem Prestasi</h3>
                         <p className="text-muted-foreground">Sistem prestasi akan segera hadir...</p>
                       </div>
                     </TabsContent>
-                    <TabsContent value="achievement-settings" className="animate-scale-in">
+                    <TabsContent value="achievement-settings" className="animate-fade-in">
                       <AchievementSettings />
                     </TabsContent>
                   </Tabs>
                 </TabsContent>
 
-                <TabsContent value="buffs" className="animate-slide-in">
-                  <BuffDebuffList />
-                </TabsContent>
-
-                <TabsContent value="settings" className="animate-slide-in">
+                <TabsContent value="settings" className="animate-fade-in">
                   <Settings />
                 </TabsContent>
               </div>
@@ -137,6 +132,11 @@ const Index = () => {
             </div>
 
             <AIAssistant />
+            
+            <div className="glass rounded-lg p-4 mt-4">
+              <h3 className="font-orbitron font-bold mb-3">Buff & Debuff Aktif</h3>
+              <BuffDebuffList />
+            </div>
           </div>
         </div>
       </div>

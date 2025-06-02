@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Coins, Zap, Trophy, Gift, Sparkles, Star } from 'lucide-react';
+import { Plus, Coins } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const ShopTabs = () => {
@@ -109,14 +109,14 @@ const ShopTabs = () => {
 
       <Tabs defaultValue="entertainment" className="w-full">
         <TabsList className="grid w-full grid-cols-4 glass">
-          <TabsTrigger value="entertainment" className="font-orbitron transition-all duration-500">{t('shop.entertainment')}</TabsTrigger>
-          <TabsTrigger value="food" className="font-orbitron transition-all duration-500">{t('shop.food')}</TabsTrigger>
-          <TabsTrigger value="education" className="font-orbitron transition-all duration-500">{t('shop.education')}</TabsTrigger>
-          <TabsTrigger value="lifestyle" className="font-orbitron transition-all duration-500">{t('shop.lifestyle')}</TabsTrigger>
+          <TabsTrigger value="entertainment" className="font-orbitron transition-all duration-300">{t('shop.entertainment')}</TabsTrigger>
+          <TabsTrigger value="food" className="font-orbitron transition-all duration-300">{t('shop.food')}</TabsTrigger>
+          <TabsTrigger value="education" className="font-orbitron transition-all duration-300">{t('shop.education')}</TabsTrigger>
+          <TabsTrigger value="lifestyle" className="font-orbitron transition-all duration-300">{t('shop.lifestyle')}</TabsTrigger>
         </TabsList>
 
         {['entertainment', 'food', 'education', 'lifestyle'].map(category => (
-          <TabsContent key={category} value={category} className="mt-6 animate-slide-in-futuristic">
+          <TabsContent key={category} value={category} className="mt-6 animate-fade-in">
             <div className="space-y-4">
               <h3 className="text-xl font-orbitron font-bold">{t(`shop.${category}`)}</h3>
               
@@ -146,7 +146,7 @@ const ShopTabs = () => {
                 ))}
               </div>
 
-              {/* Add Item Button - Moved to bottom */}
+              {/* Add Item Button - at the bottom */}
               <div className="flex justify-center pt-4">
                 <Dialog open={isAddingReward} onOpenChange={(open) => {
                   setIsAddingReward(open);
@@ -155,7 +155,7 @@ const ShopTabs = () => {
                   <DialogTrigger asChild>
                     <Button className="font-orbitron">
                       <Plus className="w-4 h-4 mr-2" />
-                      + Tambah Item
+                      Tambah Item
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="glass">

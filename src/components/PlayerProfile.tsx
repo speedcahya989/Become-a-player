@@ -90,10 +90,14 @@ const PlayerProfile = () => {
             <img 
               src={playerData.avatar} 
               alt="Avatar" 
-              className="w-24 h-24 rounded-full object-cover ring-4 ring-primary/50 ring-offset-2 ring-offset-background shadow-lg shadow-primary/20"
+              className="w-24 h-24 rounded-full object-cover ring-4 ring-primary/50 ring-offset-2 ring-offset-background shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-shadow duration-500"
+              style={{ boxShadow: '0 0 20px rgba(6, 182, 212, 0.3), inset 0 0 10px rgba(6, 182, 212, 0.1)' }}
             />
           ) : (
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-2xl font-orbitron font-black ring-4 ring-primary/50 ring-offset-2 ring-offset-background shadow-lg shadow-primary/20">
+            <div 
+              className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-2xl font-orbitron font-black ring-4 ring-primary/50 ring-offset-2 ring-offset-background shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-shadow duration-500"
+              style={{ boxShadow: '0 0 20px rgba(6, 182, 212, 0.3), inset 0 0 10px rgba(6, 182, 212, 0.1)' }}
+            >
               {playerData.name[0]}
             </div>
           )}
@@ -166,9 +170,16 @@ const PlayerProfile = () => {
           <Badge variant="outline" className="font-orbitron">
             {t('stats.level')} {playerData.level}
           </Badge>
+        </div>
+        
+        {/* Rank Badge - Now below level */}
+        <div className="flex justify-center mt-3">
           <Badge 
             variant="secondary" 
-            className={`font-orbitron font-bold text-xl px-6 py-2 border-2 ${backgroundColor} ${textColor} ${shadow} transform hover:scale-105 transition-transform`}
+            className={`font-orbitron font-bold text-2xl px-8 py-3 border-3 ${backgroundColor} ${textColor} transform hover:scale-105 transition-all duration-300 animate-subtle-glow-rank`}
+            style={{ 
+              boxShadow: `0 0 15px ${getRankColors(playerData.rank).shadowColor}, inset 0 0 8px ${getRankColors(playerData.rank).shadowColor}` 
+            }}
           >
             {playerData.rank}
           </Badge>
@@ -181,7 +192,9 @@ const PlayerProfile = () => {
           <span>{t('stats.experience')}</span>
           <span className="text-primary">{playerData.xp}/{playerData.xpToNext}</span>
         </div>
-        <Progress value={xpPercentage} className="h-3" />
+        <div className="relative">
+          <Progress value={xpPercentage} className="h-3 animate-subtle-glow-xp" />
+        </div>
       </div>
 
       {/* Gold with Icon */}

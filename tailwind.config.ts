@@ -163,6 +163,28 @@ export default {
 					'100%': {
 						textShadow: '0 0 5px currentColor, 0 0 10px currentColor'
 					}
+				},
+				'subtle-glow-rank': {
+					'0%': {
+						textShadow: '0 0 3px currentColor'
+					},
+					'50%': {
+						textShadow: '0 0 8px currentColor, 0 0 12px currentColor'
+					},
+					'100%': {
+						textShadow: '0 0 3px currentColor'
+					}
+				},
+				'subtle-glow-xp': {
+					'0%': {
+						boxShadow: '0 0 3px rgba(6, 182, 212, 0.3)'
+					},
+					'50%': {
+						boxShadow: '0 0 8px rgba(6, 182, 212, 0.5), 0 0 12px rgba(6, 182, 212, 0.3)'
+					},
+					'100%': {
+						boxShadow: '0 0 3px rgba(6, 182, 212, 0.3)'
+					}
 				}
 			},
 			animation: {
@@ -174,7 +196,9 @@ export default {
 				'slide-in-left': 'slide-in-left 0.4s ease-out',
 				'slide-in-right': 'slide-in-right 0.4s ease-out',
 				'slide-in-futuristic': 'slide-in-futuristic 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-				'hologram-pulse': 'hologram-pulse 2s ease-in-out infinite'
+				'hologram-pulse': 'hologram-pulse 2s ease-in-out infinite',
+				'subtle-glow-rank': 'subtle-glow-rank 3s ease-in-out infinite',
+				'subtle-glow-xp': 'subtle-glow-xp 4s ease-in-out infinite'
 			}
 		}
 	},
