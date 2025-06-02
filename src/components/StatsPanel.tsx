@@ -6,6 +6,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import { Trophy, Zap, Crown, Heart, Smile, Meh, Frown } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { getRankColors } from '../utils/rankUtils';
 
 const StatsPanel = () => {
   const { t } = useLanguage();
@@ -48,25 +49,6 @@ const StatsPanel = () => {
     ]
   });
 
-  const getRankBadge = (rank: string) => {
-    const rankStyles = {
-      'SS': 'bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white font-black border-none shadow-[0_0_20px_rgba(255,215,0,0.8)] animate-pulse',
-      'S': 'bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold border-none shadow-[0_0_15px_rgba(147,51,234,0.7)]',
-      'A+': 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold border-none shadow-[0_0_12px_rgba(59,130,246,0.6)]',
-      'A': 'bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold border-none shadow-[0_0_10px_rgba(59,130,246,0.5)]',
-      'B+': 'bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold border-none shadow-[0_0_8px_rgba(34,197,94,0.5)]',
-      'B': 'bg-gradient-to-r from-green-400 to-green-500 text-white font-medium border-none shadow-[0_0_6px_rgba(34,197,94,0.4)]',
-      'C+': 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-medium border-none shadow-[0_0_6px_rgba(245,158,11,0.4)]',
-      'C': 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-medium border-none shadow-[0_0_4px_rgba(245,158,11,0.3)]',
-      'D+': 'bg-gradient-to-r from-gray-500 to-gray-600 text-white font-normal border-none',
-      'D': 'bg-gradient-to-r from-gray-400 to-gray-500 text-white font-normal border-none',
-      'F+': 'bg-gradient-to-r from-red-400 to-red-500 text-white font-normal border-none',
-      'F-': 'bg-gradient-to-r from-red-600 to-red-700 text-white font-normal border-none'
-    };
-    
-    return rankStyles[rank] || rankStyles['F-'];
-  };
-
   const getMoodIcon = (mood: string) => {
     switch (mood) {
       case 'happy': return <Smile className="w-6 h-6 text-green-400" />;
@@ -90,6 +72,8 @@ const StatsPanel = () => {
       color: "hsl(var(--primary))",
     },
   };
+
+  const { backgroundColor, textColor, shadow } = getRankColors(playerData.rank);
 
   return (
     <div className="space-y-6">
@@ -130,7 +114,10 @@ const StatsPanel = () => {
         <Card className="glass border-purple-500/30">
           <CardContent className="p-4 text-center">
             <Crown className="w-8 h-8 mx-auto mb-2 text-purple-400" />
-            <Badge variant="outline" className={`${getRankBadge(playerData.rank)} font-orbitron text-sm px-3 py-1`}>
+            <Badge 
+              variant="outline" 
+              className={`font-orbitron font-bold text-2xl px-6 py-3 border-2 ${backgroundColor} ${textColor} ${shadow} transform hover:scale-105 transition-transform`}
+            >
               {playerData.rank}
             </Badge>
             <div className="text-sm text-muted-foreground mt-2">{t('stats.rank')}</div>

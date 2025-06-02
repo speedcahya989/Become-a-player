@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -9,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useLanguage } from '../contexts/LanguageContext';
+import { getRankColors } from '../utils/rankUtils';
 
 const PlayerProfile = () => {
   const { t } = useLanguage();
@@ -23,11 +25,11 @@ const PlayerProfile = () => {
     gold: 1250,
     avatar: "",
     stats: {
-      STR: 18,
-      DEX: 15,
-      INT: 22,
-      WIS: 20,
-      CHA: 16
+      STR: 180,
+      DEX: 150,
+      INT: 220,
+      WIS: 200,
+      CHA: 160
     }
   });
 
@@ -43,7 +45,7 @@ const PlayerProfile = () => {
   const radarData = Object.entries(playerData.stats).map(([statName, value]) => ({
     stat: statName,
     value: value,
-    fullMark: 50
+    fullMark: 1000
   }));
 
   const chartConfig = {
@@ -77,23 +79,7 @@ const PlayerProfile = () => {
     }
   };
 
-  const getRankStyle = (rank: string) => {
-    const rankStyles = {
-      'SS': 'bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white font-black border-none shadow-[0_0_20px_rgba(255,215,0,0.8)] animate-pulse text-lg px-6 py-2',
-      'S': 'bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold border-none shadow-[0_0_15px_rgba(147,51,234,0.7)] text-lg px-5 py-2',
-      'A+': 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold border-none shadow-[0_0_12px_rgba(59,130,246,0.6)] text-base px-4 py-1.5',
-      'A': 'bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold border-none shadow-[0_0_10px_rgba(59,130,246,0.5)] px-4 py-1.5',
-      'B+': 'bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold border-none shadow-[0_0_8px_rgba(34,197,94,0.5)] px-3 py-1',
-      'B': 'bg-gradient-to-r from-green-400 to-green-500 text-white font-medium border-none shadow-[0_0_6px_rgba(34,197,94,0.4)] px-3 py-1',
-      'C+': 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-medium border-none shadow-[0_0_6px_rgba(245,158,11,0.4)] px-3 py-1',
-      'C': 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-medium border-none shadow-[0_0_4px_rgba(245,158,11,0.3)] px-3 py-1',
-      'D+': 'bg-gradient-to-r from-gray-500 to-gray-600 text-white font-normal border-none px-3 py-1',
-      'D': 'bg-gradient-to-r from-gray-400 to-gray-500 text-white font-normal border-none px-3 py-1',
-      'F+': 'bg-gradient-to-r from-red-400 to-red-500 text-white font-normal border-none px-3 py-1',
-      'F-': 'bg-gradient-to-r from-red-600 to-red-700 text-white font-normal border-none px-3 py-1'
-    };
-    return rankStyles[rank] || rankStyles['F-'];
-  };
+  const { backgroundColor, textColor, shadow } = getRankColors(playerData.rank);
 
   return (
     <div className="glass rounded-lg p-6 space-y-6">
@@ -104,10 +90,10 @@ const PlayerProfile = () => {
             <img 
               src={playerData.avatar} 
               alt="Avatar" 
-              className="w-24 h-24 rounded-full object-cover"
+              className="w-24 h-24 rounded-full object-cover ring-4 ring-primary/50 ring-offset-2 ring-offset-background shadow-lg shadow-primary/20"
             />
           ) : (
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-2xl font-orbitron font-black">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-2xl font-orbitron font-black ring-4 ring-primary/50 ring-offset-2 ring-offset-background shadow-lg shadow-primary/20">
               {playerData.name[0]}
             </div>
           )}
@@ -182,7 +168,7 @@ const PlayerProfile = () => {
           </Badge>
           <Badge 
             variant="secondary" 
-            className={`font-orbitron ${getRankStyle(playerData.rank)}`}
+            className={`font-orbitron font-bold text-xl px-6 py-2 border-2 ${backgroundColor} ${textColor} ${shadow} transform hover:scale-105 transition-transform`}
           >
             {playerData.rank}
           </Badge>
@@ -221,7 +207,7 @@ const PlayerProfile = () => {
               />
               <PolarRadiusAxis 
                 angle={0} 
-                domain={[0, 50]} 
+                domain={[0, 1000]} 
                 tick={false}
                 className="text-muted-foreground"
               />
@@ -236,7 +222,7 @@ const PlayerProfile = () => {
               />
               <ChartTooltip 
                 content={<ChartTooltipContent />}
-                formatter={(value) => [`${value}/50`, t('stats.value')]}
+                formatter={(value) => [`${value}/1000`, t('stats.value')]}
               />
             </RadarChart>
           </ChartContainer>

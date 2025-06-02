@@ -135,6 +135,34 @@ export default {
 						transform: 'translateX(0)',
 						opacity: '1'
 					}
+				},
+				'slide-in-futuristic': {
+					'0%': {
+						transform: 'translateX(-100px) rotateY(-15deg)',
+						opacity: '0',
+						filter: 'blur(4px)'
+					},
+					'50%': {
+						transform: 'translateX(-20px) rotateY(-5deg)',
+						opacity: '0.7',
+						filter: 'blur(2px)'
+					},
+					'100%': {
+						transform: 'translateX(0) rotateY(0deg)',
+						opacity: '1',
+						filter: 'blur(0px)'
+					}
+				},
+				'hologram-pulse': {
+					'0%': {
+						textShadow: '0 0 5px currentColor, 0 0 10px currentColor'
+					},
+					'50%': {
+						textShadow: '0 0 20px currentColor, 0 0 30px currentColor, 0 0 40px currentColor'
+					},
+					'100%': {
+						textShadow: '0 0 5px currentColor, 0 0 10px currentColor'
+					}
 				}
 			},
 			animation: {
@@ -144,7 +172,9 @@ export default {
 				'scale-in': 'scale-in 0.3s ease-out',
 				'slide-in': 'slide-in 0.3s ease-out',
 				'slide-in-left': 'slide-in-left 0.4s ease-out',
-				'slide-in-right': 'slide-in-right 0.4s ease-out'
+				'slide-in-right': 'slide-in-right 0.4s ease-out',
+				'slide-in-futuristic': 'slide-in-futuristic 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+				'hologram-pulse': 'hologram-pulse 2s ease-in-out infinite'
 			}
 		}
 	},

@@ -1,51 +1,61 @@
 
-export const getRankStyles = (rank: string) => {
-  const normalizedRank = rank.toLowerCase().replace(/[\s-+]/g, '');
+export const getRankColors = (rank: string) => {
+  const lowerRank = rank.toLowerCase();
   
-  const rankStyleMap: { [key: string]: { color: string; shadow: string } } = {
-    // F ranks (white)
-    'f': { color: 'text-white', shadow: 'drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' },
-    'f-': { color: 'text-white', shadow: 'drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' },
-    'f+': { color: 'text-white', shadow: 'drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' },
-    
-    // E ranks (green)
-    'e': { color: 'text-green-400', shadow: 'drop-shadow-[0_0_8px_rgba(34,197,94,0.8)]' },
-    'e-': { color: 'text-green-400', shadow: 'drop-shadow-[0_0_8px_rgba(34,197,94,0.8)]' },
-    'e+': { color: 'text-green-400', shadow: 'drop-shadow-[0_0_8px_rgba(34,197,94,0.8)]' },
-    
-    // D ranks (blue)
-    'd': { color: 'text-blue-400', shadow: 'drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]' },
-    'd-': { color: 'text-blue-400', shadow: 'drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]' },
-    'd+': { color: 'text-blue-400', shadow: 'drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]' },
-    
-    // C ranks (purple)
-    'c': { color: 'text-purple-400', shadow: 'drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]' },
-    'c-': { color: 'text-purple-400', shadow: 'drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]' },
-    'c+': { color: 'text-purple-400', shadow: 'drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]' },
-    
-    // B ranks (orange)
-    'b': { color: 'text-orange-400', shadow: 'drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]' },
-    'b-': { color: 'text-orange-400', shadow: 'drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]' },
-    'b+': { color: 'text-orange-400', shadow: 'drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]' },
-    
-    // A ranks (red)
-    'a': { color: 'text-red-400', shadow: 'drop-shadow-[0_0_8px_rgba(248,113,113,0.8)]' },
-    'a-': { color: 'text-red-400', shadow: 'drop-shadow-[0_0_8px_rgba(248,113,113,0.8)]' },
-    'a+': { color: 'text-red-400', shadow: 'drop-shadow-[0_0_8px_rgba(248,113,113,0.8)]' },
-    
-    // S ranks (gold)
-    's': { color: 'text-yellow-400', shadow: 'drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]' },
-    's-': { color: 'text-yellow-400', shadow: 'drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]' },
-    's+': { color: 'text-yellow-400', shadow: 'drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]' },
-    
-    // SS rank (black with special glow)
-    'ss': { color: 'text-gray-900', shadow: 'drop-shadow-[0_0_12px_rgba(0,0,0,1)] drop-shadow-[0_0_24px_rgba(255,255,255,0.5)]' }
+  if (lowerRank.includes('f')) {
+    return {
+      backgroundColor: 'bg-white border-white',
+      textColor: 'text-black',
+      shadow: 'shadow-lg shadow-white/20'
+    };
+  } else if (lowerRank.includes('e')) {
+    return {
+      backgroundColor: 'bg-green-500 border-green-400',
+      textColor: 'text-white',
+      shadow: 'shadow-lg shadow-green-500/40'
+    };
+  } else if (lowerRank.includes('d')) {
+    return {
+      backgroundColor: 'bg-blue-500 border-blue-400',
+      textColor: 'text-white',
+      shadow: 'shadow-lg shadow-blue-500/40'
+    };
+  } else if (lowerRank.includes('c')) {
+    return {
+      backgroundColor: 'bg-purple-500 border-purple-400',
+      textColor: 'text-white',
+      shadow: 'shadow-lg shadow-purple-500/40'
+    };
+  } else if (lowerRank.includes('b')) {
+    return {
+      backgroundColor: 'bg-orange-500 border-orange-400',
+      textColor: 'text-white',
+      shadow: 'shadow-lg shadow-orange-500/40'
+    };
+  } else if (lowerRank.includes('a')) {
+    return {
+      backgroundColor: 'bg-red-500 border-red-400',
+      textColor: 'text-white',
+      shadow: 'shadow-lg shadow-red-500/40'
+    };
+  } else if (lowerRank.includes('s') && !lowerRank.includes('ss')) {
+    return {
+      backgroundColor: 'bg-gradient-to-r from-yellow-400 to-yellow-600 border-yellow-400',
+      textColor: 'text-black',
+      shadow: 'shadow-lg shadow-yellow-500/50'
+    };
+  } else if (lowerRank.includes('ss')) {
+    return {
+      backgroundColor: 'bg-black border-gray-700',
+      textColor: 'text-white',
+      shadow: 'shadow-lg shadow-black/60'
+    };
+  }
+  
+  // Default fallback
+  return {
+    backgroundColor: 'bg-gray-500 border-gray-400',
+    textColor: 'text-white',
+    shadow: 'shadow-lg shadow-gray-500/40'
   };
-
-  return rankStyleMap[normalizedRank] || { color: 'text-white', shadow: 'drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' };
-};
-
-export const getRankClass = (rank: string) => {
-  const styles = getRankStyles(rank);
-  return `${styles.color} ${styles.shadow} font-bold`;
 };

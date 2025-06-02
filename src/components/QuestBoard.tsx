@@ -289,184 +289,21 @@ const QuestBoard = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="text-center flex-1">
-          <h2 className="text-3xl font-orbitron font-bold hologram-text mb-2">{t('quest.title')}</h2>
-          <p className="text-muted-foreground">{t('quest.subtitle')}</p>
-        </div>
-        <Dialog open={isAddingQuest} onOpenChange={(open) => {
-          setIsAddingQuest(open);
-          if (!open) {
-            setEditingQuest(null);
-            resetForm();
-          }
-        }}>
-          <DialogTrigger asChild>
-            <Button className="font-orbitron">
-              <Plus className="w-4 h-4 mr-2" />
-              {t('quest.add')}
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="glass max-w-2xl">
-            <DialogHeader>
-              <DialogTitle className="font-orbitron">
-                {editingQuest ? `${t('button.edit')} Quest` : t('quest.add')}
-              </DialogTitle>
-            </DialogHeader>
-            <div className="grid grid-cols-2 gap-4 max-h-96 overflow-y-auto">
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="quest-title">{t('quest.form.title')}</Label>
-                  <Input
-                    id="quest-title"
-                    value={questForm.title}
-                    onChange={(e) => setQuestForm(prev => ({ ...prev, title: e.target.value }))}
-                    placeholder={t('quest.form.title')}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="quest-desc">{t('quest.form.description')}</Label>
-                  <Textarea
-                    id="quest-desc"
-                    value={questForm.description}
-                    onChange={(e) => setQuestForm(prev => ({ ...prev, description: e.target.value }))}
-                    placeholder={t('quest.form.description')}
-                    rows={3}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="quest-type">{t('quest.form.type')}</Label>
-                  <select 
-                    id="quest-type"
-                    value={questForm.type}
-                    onChange={(e) => setQuestForm(prev => ({ ...prev, type: e.target.value as QuestType }))}
-                    className="w-full p-2 bg-background border border-border rounded-md"
-                  >
-                    <option value="daily">{t('quest.daily')}</option>
-                    <option value="weekly">{t('quest.weekly')}</option>
-                    <option value="main">{t('quest.main')}</option>
-                    <option value="event">{t('quest.event')}</option>
-                  </select>
-                </div>
-                <div>
-                  <Label htmlFor="quest-difficulty">{t('quest.form.difficulty')}</Label>
-                  <select 
-                    id="quest-difficulty"
-                    value={questForm.difficulty}
-                    onChange={(e) => setQuestForm(prev => ({ ...prev, difficulty: e.target.value }))}
-                    className="w-full p-2 bg-background border border-border rounded-md"
-                  >
-                    <option value="Mudah">{t('quest.difficulty.easy')}</option>
-                    <option value="Sedang">{t('quest.difficulty.medium')}</option>
-                    <option value="Sulit">{t('quest.difficulty.hard')}</option>
-                  </select>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="ai-generated"
-                    checked={questForm.isAIGenerated}
-                    onChange={(e) => setQuestForm(prev => ({ ...prev, isAIGenerated: e.target.checked }))}
-                    className="rounded border border-border"
-                  />
-                  <Label htmlFor="ai-generated" className="text-sm">Quest dibuat oleh AI</Label>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="quest-xp" className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-primary" />
-                    {t('quest.form.xp')}
-                  </Label>
-                  <Input
-                    id="quest-xp"
-                    type="number"
-                    value={questForm.xpReward}
-                    onChange={(e) => setQuestForm(prev => ({ ...prev, xpReward: parseInt(e.target.value) || 0 }))}
-                    placeholder="0"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="quest-gold" className="flex items-center gap-2">
-                    <Coins className="w-4 h-4 text-yellow-400" />
-                    {t('quest.form.gold')}
-                  </Label>
-                  <Input
-                    id="quest-gold"
-                    type="number"
-                    value={questForm.goldReward}
-                    onChange={(e) => setQuestForm(prev => ({ ...prev, goldReward: parseInt(e.target.value) || 0 }))}
-                    placeholder="0"
-                  />
-                </div>
-                <div>
-                  <Label className="flex items-center gap-2">
-                    {getStatIcon(questForm.statBonus)}
-                    {t('quest.form.stats')}
-                  </Label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <select 
-                      value={questForm.statBonus}
-                      onChange={(e) => setQuestForm(prev => ({ ...prev, statBonus: e.target.value }))}
-                      className="p-2 bg-background border border-border rounded-md"
-                    >
-                      <option value="STR">STR</option>
-                      <option value="DEX">DEX</option>
-                      <option value="INT">INT</option>
-                      <option value="WIS">WIS</option>
-                      <option value="CHA">CHA</option>
-                      <option value="CON">CON</option>
-                    </select>
-                    <Input
-                      type="number"
-                      value={questForm.statValue}
-                      onChange={(e) => setQuestForm(prev => ({ ...prev, statValue: parseInt(e.target.value) || 1 }))}
-                      min="1"
-                      placeholder="1"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="quest-duration">{t('quest.form.duration')}</Label>
-                  <Input
-                    id="quest-duration"
-                    type="number"
-                    value={questForm.duration}
-                    onChange={(e) => setQuestForm(prev => ({ ...prev, duration: parseInt(e.target.value) || 1 }))}
-                    min="1"
-                    placeholder="1"
-                  />
-                </div>
-                {renderExpirationFields()}
-              </div>
-            </div>
-            <div className="flex gap-2 mt-4">
-              <Button onClick={handleSaveQuest} className="flex-1">
-                {editingQuest ? t('button.update') : t('button.add')} Quest
-              </Button>
-              <Button variant="outline" onClick={() => {
-                setIsAddingQuest(false);
-                setEditingQuest(null);
-                resetForm();
-              }}>
-                {t('button.cancel')}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+      <div className="text-center">
+        <h2 className="text-3xl font-orbitron font-bold hologram-text mb-2">{t('quest.title')}</h2>
+        <p className="text-muted-foreground">{t('quest.subtitle')}</p>
       </div>
 
       <Tabs defaultValue="daily" className="w-full">
         <TabsList className="grid w-full grid-cols-4 glass">
-          <TabsTrigger value="daily" className="font-orbitron">{t('quest.daily')}</TabsTrigger>
-          <TabsTrigger value="weekly" className="font-orbitron">{t('quest.weekly')}</TabsTrigger>
-          <TabsTrigger value="main" className="font-orbitron">{t('quest.main')}</TabsTrigger>
-          <TabsTrigger value="event" className="font-orbitron">{t('quest.event')}</TabsTrigger>
+          <TabsTrigger value="daily" className="font-orbitron transition-all duration-500">{t('quest.daily')}</TabsTrigger>
+          <TabsTrigger value="weekly" className="font-orbitron transition-all duration-500">{t('quest.weekly')}</TabsTrigger>
+          <TabsTrigger value="main" className="font-orbitron transition-all duration-500">{t('quest.main')}</TabsTrigger>
+          <TabsTrigger value="event" className="font-orbitron transition-all duration-500">{t('quest.event')}</TabsTrigger>
         </TabsList>
 
         {(['daily', 'weekly', 'main', 'event'] as QuestType[]).map(tabValue => (
-          <TabsContent key={tabValue} value={tabValue} className="mt-6">
+          <TabsContent key={tabValue} value={tabValue} className="mt-6 animate-slide-in-futuristic">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-orbitron font-bold">Quest {t(`quest.${tabValue}`)}</h3>
@@ -498,6 +335,171 @@ const QuestBoard = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+              
+              {/* Add Quest Button - Moved to bottom */}
+              <div className="flex justify-center pt-4">
+                <Dialog open={isAddingQuest} onOpenChange={(open) => {
+                  setIsAddingQuest(open);
+                  if (!open) {
+                    setEditingQuest(null);
+                    resetForm();
+                  }
+                }}>
+                  <DialogTrigger asChild>
+                    <Button className="font-orbitron">
+                      <Plus className="w-4 h-4 mr-2" />
+                      {t('quest.add')}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="glass max-w-2xl">
+                    <DialogHeader>
+                      <DialogTitle className="font-orbitron">
+                        {editingQuest ? `${t('button.edit')} Quest` : t('quest.add')}
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="grid grid-cols-2 gap-4 max-h-96 overflow-y-auto">
+                      <div className="space-y-4">
+                        <div>
+                          <Label htmlFor="quest-title">{t('quest.form.title')}</Label>
+                          <Input
+                            id="quest-title"
+                            value={questForm.title}
+                            onChange={(e) => setQuestForm(prev => ({ ...prev, title: e.target.value }))}
+                            placeholder={t('quest.form.title')}
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="quest-desc">{t('quest.form.description')}</Label>
+                          <Textarea
+                            id="quest-desc"
+                            value={questForm.description}
+                            onChange={(e) => setQuestForm(prev => ({ ...prev, description: e.target.value }))}
+                            placeholder={t('quest.form.description')}
+                            rows={3}
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="quest-type">{t('quest.form.type')}</Label>
+                          <select 
+                            id="quest-type"
+                            value={questForm.type}
+                            onChange={(e) => setQuestForm(prev => ({ ...prev, type: e.target.value as QuestType }))}
+                            className="w-full p-2 bg-background border border-border rounded-md"
+                          >
+                            <option value="daily">{t('quest.daily')}</option>
+                            <option value="weekly">{t('quest.weekly')}</option>
+                            <option value="main">{t('quest.main')}</option>
+                            <option value="event">{t('quest.event')}</option>
+                          </select>
+                        </div>
+                        <div>
+                          <Label htmlFor="quest-difficulty">{t('quest.form.difficulty')}</Label>
+                          <select 
+                            id="quest-difficulty"
+                            value={questForm.difficulty}
+                            onChange={(e) => setQuestForm(prev => ({ ...prev, difficulty: e.target.value }))}
+                            className="w-full p-2 bg-background border border-border rounded-md"
+                          >
+                            <option value="Mudah">{t('quest.difficulty.easy')}</option>
+                            <option value="Sedang">{t('quest.difficulty.medium')}</option>
+                            <option value="Sulit">{t('quest.difficulty.hard')}</option>
+                          </select>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id="ai-generated"
+                            checked={questForm.isAIGenerated}
+                            onChange={(e) => setQuestForm(prev => ({ ...prev, isAIGenerated: e.target.checked }))}
+                            className="rounded border border-border"
+                          />
+                          <Label htmlFor="ai-generated" className="text-sm">Quest dibuat oleh AI</Label>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div>
+                          <Label htmlFor="quest-xp" className="flex items-center gap-2">
+                            <Zap className="w-4 h-4 text-primary" />
+                            {t('quest.form.xp')}
+                          </Label>
+                          <Input
+                            id="quest-xp"
+                            type="number"
+                            value={questForm.xpReward}
+                            onChange={(e) => setQuestForm(prev => ({ ...prev, xpReward: parseInt(e.target.value) || 0 }))}
+                            placeholder="0"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="quest-gold" className="flex items-center gap-2">
+                            <Coins className="w-4 h-4 text-yellow-400" />
+                            {t('quest.form.gold')}
+                          </Label>
+                          <Input
+                            id="quest-gold"
+                            type="number"
+                            value={questForm.goldReward}
+                            onChange={(e) => setQuestForm(prev => ({ ...prev, goldReward: parseInt(e.target.value) || 0 }))}
+                            placeholder="0"
+                          />
+                        </div>
+                        <div>
+                          <Label className="flex items-center gap-2">
+                            {getStatIcon(questForm.statBonus)}
+                            {t('quest.form.stats')}
+                          </Label>
+                          <div className="grid grid-cols-2 gap-2">
+                            <select 
+                              value={questForm.statBonus}
+                              onChange={(e) => setQuestForm(prev => ({ ...prev, statBonus: e.target.value }))}
+                              className="p-2 bg-background border border-border rounded-md"
+                            >
+                              <option value="STR">STR</option>
+                              <option value="DEX">DEX</option>
+                              <option value="INT">INT</option>
+                              <option value="WIS">WIS</option>
+                              <option value="CHA">CHA</option>
+                              <option value="CON">CON</option>
+                            </select>
+                            <Input
+                              type="number"
+                              value={questForm.statValue}
+                              onChange={(e) => setQuestForm(prev => ({ ...prev, statValue: parseInt(e.target.value) || 1 }))}
+                              min="1"
+                              placeholder="1"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <Label htmlFor="quest-duration">{t('quest.form.duration')}</Label>
+                          <Input
+                            id="quest-duration"
+                            type="number"
+                            value={questForm.duration}
+                            onChange={(e) => setQuestForm(prev => ({ ...prev, duration: parseInt(e.target.value) || 1 }))}
+                            min="1"
+                            placeholder="1"
+                          />
+                        </div>
+                        {renderExpirationFields()}
+                      </div>
+                    </div>
+                    <div className="flex gap-2 mt-4">
+                      <Button onClick={handleSaveQuest} className="flex-1">
+                        {editingQuest ? t('button.update') : t('button.add')} Quest
+                      </Button>
+                      <Button variant="outline" onClick={() => {
+                        setIsAddingQuest(false);
+                        setEditingQuest(null);
+                        resetForm();
+                      }}>
+                        {t('button.cancel')}
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </TabsContent>

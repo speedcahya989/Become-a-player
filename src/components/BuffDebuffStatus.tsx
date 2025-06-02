@@ -45,11 +45,10 @@ const BuffDebuffStatus = () => {
           <Badge 
             key={index}
             variant="outline" 
-            className="border-blue-400/50 text-blue-300 font-orbitron text-xs flex items-center gap-1"
+            className="border-blue-400/50 text-blue-300 font-orbitron text-xs flex items-center gap-1 p-2"
             style={{ boxShadow: '0 0 3px rgba(59, 130, 246, 0.5), 0 0 6px rgba(59, 130, 246, 0.3)' }}
           >
-            <IconComponent className="w-3 h-3" />
-            {buff.name} ({buff.duration})
+            <IconComponent className="w-4 h-4" />
           </Badge>
         );
       })}
@@ -60,11 +59,10 @@ const BuffDebuffStatus = () => {
           <Badge 
             key={index}
             variant="outline" 
-            className="border-red-400/50 text-red-300 font-orbitron text-xs flex items-center gap-1"
+            className="border-red-400/50 text-red-300 font-orbitron text-xs flex items-center gap-1 p-2"
             style={{ boxShadow: '0 0 3px rgba(239, 68, 68, 0.5), 0 0 6px rgba(239, 68, 68, 0.3)' }}
           >
-            <IconComponent className="w-3 h-3" />
-            {debuff.name} ({debuff.duration})
+            <IconComponent className="w-4 h-4" />
           </Badge>
         );
       })}
@@ -72,9 +70,8 @@ const BuffDebuffStatus = () => {
       {(activeBuffs.length > 0 || activeDebuffs.length > 0) && (
         <Dialog open={showDetails} onOpenChange={setShowDetails}>
           <DialogTrigger asChild>
-            <Badge variant="outline" className="text-muted-foreground font-orbitron text-xs cursor-pointer hover:bg-muted/20">
-              <Info className="w-3 h-3 mr-1" />
-              Detail
+            <Badge variant="outline" className="text-muted-foreground font-orbitron text-xs cursor-pointer hover:bg-muted/20 p-2">
+              <Info className="w-4 h-4" />
             </Badge>
           </DialogTrigger>
           <DialogContent className="glass">

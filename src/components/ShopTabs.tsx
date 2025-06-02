@@ -1,13 +1,13 @@
+
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Edit2, Trash2, ShoppingCart, Clock } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Plus, Coins, Zap, Trophy, Gift, Sparkles, Star } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const ShopTabs = () => {
@@ -16,414 +16,239 @@ const ShopTabs = () => {
   const [rewards, setRewards] = useState([
     {
       id: 1,
-      name: "Pizza Premium",
-      description: t('shop.reward.pizza.description'),
-      price: 150,
-      category: "reward",
-      rarity: "Common",
-      icon: "🍕",
-      canEdit: true
-    },
-    {
-      id: 2,
-      name: t('shop.reward.movie.name'),
-      description: t('shop.reward.movie.description'),
-      price: 200,
-      category: "reward",
-      rarity: "Rare",
+      name: "Film Premium",
+      cost: 100,
+      category: "entertainment",
+      description: "Tonton film favorit di bioskop",
       icon: "🎬",
-      canEdit: true
-    }
-  ]);
-
-  const [powerups, setPowerups] = useState([
-    {
-      id: 1,
-      name: "⚡ Lightning Reflexes",
-      description: t('shop.ability.lightning.description'),
-      price: 100,
-      category: "powerup",
-      rarity: "Common",
-      icon: "⚡",
-      canEdit: false,
-      cooldown: "Weekly",
-      lastPurchased: null
+      rarity: "common"
     },
     {
       id: 2,
-      name: "🔮 Crystal Vision", 
-      description: t('shop.ability.crystal.description'),
-      price: 150,
-      category: "powerup",
-      rarity: "Common",
-      icon: "🔮",
-      canEdit: false,
-      cooldown: "Weekly",
-      lastPurchased: null
+      name: "Makanan Enak",
+      cost: 150,
+      category: "food",
+      description: "Beli makanan kesukaan",
+      icon: "🍕",
+      rarity: "uncommon"
     },
     {
       id: 3,
-      name: "🌊 Flow State",
-      description: t('shop.ability.flow.description'),
-      price: 250,
-      category: "powerup",
-      rarity: "Rare",
-      icon: "🌊",
-      canEdit: false,
-      cooldown: "Weekly",
-      lastPurchased: null
+      name: "Game Baru",
+      cost: 300,
+      category: "entertainment",
+      description: "Beli game yang sudah lama diinginkan",
+      icon: "🎮",
+      rarity: "rare"
     },
     {
       id: 4,
-      name: "🎯 Perfect Aim",
-      description: t('shop.ability.aim.description'),
-      price: 200,
-      category: "powerup",
-      rarity: "Rare",
-      icon: "🎯",
-      canEdit: false,
-      cooldown: "Weekly",
-      lastPurchased: null
-    },
-    {
-      id: 5,
-      name: "🌟 Stellar Focus",
-      description: t('shop.ability.stellar.description'),
-      price: 180,
-      category: "powerup",
-      rarity: "Uncommon",
-      icon: "🌟",
-      canEdit: false,
-      cooldown: "Weekly",
-      lastPurchased: null
-    },
-    {
-      id: 6,
-      name: "🛡️ Aegis Shield",
-      description: t('shop.ability.aegis.description'),
-      price: 300,
-      category: "powerup",
-      rarity: "Uncommon",
-      icon: "🛡️",
-      canEdit: false,
-      cooldown: "Weekly",
-      lastPurchased: null
+      name: "Buku Inspiratif",
+      cost: 80,
+      category: "education",
+      description: "Investasi untuk pengetahuan",
+      icon: "📚",
+      rarity: "common"
     }
   ]);
 
-  const [isAddingItem, setIsAddingItem] = useState(false);
-  const [editingItem, setEditingItem] = useState<any>(null);
-  const [itemForm, setItemForm] = useState({
+  const [isAddingReward, setIsAddingReward] = useState(false);
+  const [rewardForm, setRewardForm] = useState({
     name: '',
+    cost: 0,
+    category: 'entertainment',
     description: '',
-    price: 0,
-    category: 'reward',
-    rarity: 'Common',
-    icon: '🎁'
+    icon: '🎁',
+    rarity: 'common'
   });
 
   const resetForm = () => {
-    setItemForm({
+    setRewardForm({
       name: '',
+      cost: 0,
+      category: 'entertainment',
       description: '',
-      price: 0,
-      category: 'reward',
-      rarity: 'Common',
-      icon: '🎁'
+      icon: '🎁',
+      rarity: 'common'
     });
   };
 
-  const handleSaveItem = () => {
-    if (itemForm.name && itemForm.description) {
-      const itemData = {
-        ...itemForm,
-        id: editingItem ? editingItem.id : Date.now(),
-        canEdit: true,
-        ...(itemForm.category === 'powerup' ? { cooldown: "Weekly", lastPurchased: null } : {})
+  const handleSaveReward = () => {
+    if (rewardForm.name && rewardForm.description) {
+      const newReward = {
+        ...rewardForm,
+        id: Date.now()
       };
-
-      if (editingItem) {
-        if (itemForm.category === 'reward') {
-          setRewards(prev => prev.map(r => r.id === editingItem.id ? itemData : r));
-        } else {
-          setPowerups(prev => prev.map(p => p.id === editingItem.id ? {
-            ...itemData,
-            cooldown: p.cooldown,
-            lastPurchased: p.lastPurchased
-          } : p));
-        }
-        setEditingItem(null);
-      } else {
-        if (itemForm.category === 'reward') {
-          setRewards(prev => [...prev, itemData]);
-        } else {
-          setPowerups(prev => [...prev, { 
-            ...itemData,
-            cooldown: "Weekly",
-            lastPurchased: null
-          }]);
-        }
-      }
-
+      setRewards(prev => [...prev, newReward]);
       resetForm();
-      setIsAddingItem(false);
-    }
-  };
-
-  const handleEditItem = (item: any) => {
-    if (!item.canEdit) return;
-    
-    setItemForm({
-      name: item.name,
-      description: item.description,
-      price: item.price,
-      category: item.category,
-      rarity: item.rarity,
-      icon: item.icon
-    });
-    setEditingItem(item);
-    setIsAddingItem(true);
-  };
-
-  const handleDeleteItem = (itemId: number, category: string) => {
-    if (category === 'reward') {
-      setRewards(prev => prev.filter(r => r.id !== itemId));
-    } else {
-      setPowerups(prev => prev.filter(p => p.id !== itemId));
+      setIsAddingReward(false);
     }
   };
 
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
-      case 'Common': return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
-      case 'Uncommon': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'Rare': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'Epic': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-      case 'Legendary': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      case 'common': return 'border-gray-400 text-gray-300';
+      case 'uncommon': return 'border-green-400 text-green-300';
+      case 'rare': return 'border-blue-400 text-blue-300';
+      case 'epic': return 'border-purple-400 text-purple-300';
+      case 'legendary': return 'border-yellow-400 text-yellow-300';
+      default: return 'border-gray-400 text-gray-300';
     }
   };
 
-  const canPurchase = (item: any) => {
-    if (item.category === 'powerup' && item.lastPurchased) {
-      // Check if a week has passed since last purchase
-      const daysSinceLastPurchase = Math.floor((Date.now() - item.lastPurchased) / (1000 * 60 * 60 * 24));
-      return daysSinceLastPurchase >= 7;
-    }
-    return true;
-  };
-
-  const handlePurchase = (item: any) => {
-    if (item.category === 'powerup') {
-      setPowerups(prev => prev.map(p => 
-        p.id === item.id ? { ...p, lastPurchased: Date.now() } : p
-      ));
-    }
-    console.log(`Purchased: ${item.name}`);
+  const getRewardsByCategory = (category: string) => {
+    return rewards.filter(reward => reward.category === category);
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="text-center flex-1">
-          <h2 className="text-3xl font-orbitron font-bold hologram-text mb-2">{t('shop.title')}</h2>
-          <p className="text-muted-foreground">{t('shop.subtitle')}</p>
-        </div>
-        <Dialog open={isAddingItem} onOpenChange={(open) => {
-          setIsAddingItem(open);
-          if (!open) {
-            setEditingItem(null);
-            resetForm();
-          }
-        }}>
-          <DialogTrigger asChild>
-            <Button className="font-orbitron">
-              <Plus className="w-4 h-4 mr-2" />
-              {t('button.add')} {t('shop.item')}
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="glass max-w-lg">
-            <DialogHeader>
-              <DialogTitle className="font-orbitron">
-                {editingItem ? `${t('button.edit')} ${t('shop.item')}` : `${t('button.add')} ${t('shop.newItem')}`}
-              </DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="item-name">{t('shop.form.name')}</Label>
-                <Input
-                  id="item-name"
-                  value={itemForm.name}
-                  onChange={(e) => setItemForm(prev => ({ ...prev, name: e.target.value }))}
-                  placeholder={t('shop.form.namePlaceholder')}
-                />
-              </div>
-              <div>
-                <Label htmlFor="item-desc">{t('shop.form.description')}</Label>
-                <Textarea
-                  id="item-desc"
-                  value={itemForm.description}
-                  onChange={(e) => setItemForm(prev => ({ ...prev, description: e.target.value }))}
-                  placeholder={t('shop.form.descriptionPlaceholder')}
-                  rows={3}
-                />
-              </div>
-              <div>
-                <Label htmlFor="item-price">{t('shop.form.price')}</Label>
-                <Input
-                  id="item-price"
-                  type="number"
-                  value={itemForm.price}
-                  onChange={(e) => setItemForm(prev => ({ ...prev, price: parseInt(e.target.value) || 0 }))}
-                  placeholder="0"
-                />
-              </div>
-              <div>
-                <Label htmlFor="item-category">{t('shop.form.category')}</Label>
-                <select 
-                  id="item-category"
-                  value={itemForm.category}
-                  onChange={(e) => setItemForm(prev => ({ ...prev, category: e.target.value }))}
-                  className="w-full p-2 bg-background border border-border rounded-md"
-                >
-                  <option value="reward">{t('shop.rewards')}</option>
-                  <option value="powerup">{t('shop.abilities')}</option>
-                </select>
-              </div>
-              <div>
-                <Label htmlFor="item-rarity">{t('shop.form.rarity')}</Label>
-                <select 
-                  id="item-rarity"
-                  value={itemForm.rarity}
-                  onChange={(e) => setItemForm(prev => ({ ...prev, rarity: e.target.value }))}
-                  className="w-full p-2 bg-background border border-border rounded-md"
-                >
-                  <option value="Common">{t('shop.rarity.common')}</option>
-                  <option value="Uncommon">{t('shop.rarity.uncommon')}</option>
-                  <option value="Rare">{t('shop.rarity.rare')}</option>
-                  <option value="Epic">{t('shop.rarity.epic')}</option>
-                  <option value="Legendary">{t('shop.rarity.legendary')}</option>
-                </select>
-              </div>
-              <div>
-                <Label htmlFor="item-icon">{t('shop.form.icon')}</Label>
-                <Input
-                  id="item-icon"
-                  value={itemForm.icon}
-                  onChange={(e) => setItemForm(prev => ({ ...prev, icon: e.target.value }))}
-                  placeholder="🎁"
-                />
-              </div>
-            </div>
-            <div className="flex gap-2 mt-4">
-              <Button onClick={handleSaveItem} className="flex-1">
-                {editingItem ? t('button.update') : t('button.add')} {t('shop.item')}
-              </Button>
-              <Button variant="outline" onClick={() => {
-                setIsAddingItem(false);
-                setEditingItem(null);
-                resetForm();
-              }}>
-                {t('button.cancel')}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+      <div className="text-center">
+        <h2 className="text-3xl font-orbitron font-bold hologram-text mb-2">{t('shop.title')}</h2>
+        <p className="text-muted-foreground">{t('shop.subtitle')}</p>
       </div>
 
-      <Tabs defaultValue="rewards" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 glass">
-          <TabsTrigger value="rewards" className="font-orbitron">{t('shop.rewards')}</TabsTrigger>
-          <TabsTrigger value="powerups" className="font-orbitron">{t('shop.abilities')}</TabsTrigger>
+      <Tabs defaultValue="entertainment" className="w-full">
+        <TabsList className="grid w-full grid-cols-4 glass">
+          <TabsTrigger value="entertainment" className="font-orbitron transition-all duration-500">{t('shop.entertainment')}</TabsTrigger>
+          <TabsTrigger value="food" className="font-orbitron transition-all duration-500">{t('shop.food')}</TabsTrigger>
+          <TabsTrigger value="education" className="font-orbitron transition-all duration-500">{t('shop.education')}</TabsTrigger>
+          <TabsTrigger value="lifestyle" className="font-orbitron transition-all duration-500">{t('shop.lifestyle')}</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="rewards" className="mt-6">
-          <div className="grid gap-4">
-            {rewards.map(reward => (
-              <Card key={reward.id} className="glass relative">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        <span className="text-2xl">{reward.icon}</span>
-                        <h4 className="font-orbitron font-bold text-lg">{reward.name}</h4>
-                        <Badge variant="outline" className={getRarityColor(reward.rarity)}>
-                          {t(`shop.rarity.${reward.rarity.toLowerCase()}`)}
-                        </Badge>
-                      </div>
-                      <p className="text-muted-foreground text-sm mb-3">{reward.description}</p>
-                      <div className="flex items-center gap-4">
-                        <span className="text-yellow-400 font-orbitron font-bold">{reward.price} {t('common.gold')}</span>
-                        <Button className="font-orbitron">
-                          <ShoppingCart className="w-4 h-4 mr-2" />
-                          {t('shop.buy')}
-                        </Button>
-                      </div>
+        {['entertainment', 'food', 'education', 'lifestyle'].map(category => (
+          <TabsContent key={category} value={category} className="mt-6 animate-slide-in-futuristic">
+            <div className="space-y-4">
+              <h3 className="text-xl font-orbitron font-bold">{t(`shop.${category}`)}</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {getRewardsByCategory(category).map(reward => (
+                  <div key={reward.id} className={`glass rounded-lg p-4 border-2 ${getRarityColor(reward.rarity)} hover:scale-105 transition-transform`}>
+                    <div className="text-center mb-3">
+                      <div className="text-4xl mb-2">{reward.icon}</div>
+                      <h4 className="font-orbitron font-bold">{reward.name}</h4>
+                      <p className="text-sm text-muted-foreground mt-1">{reward.description}</p>
                     </div>
-                    {reward.canEdit && (
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" onClick={() => handleEditItem(reward)}>
-                          <Edit2 className="w-3 h-3" />
-                        </Button>
-                        <Button size="sm" variant="destructive" onClick={() => handleDeleteItem(reward.id, 'reward')}>
-                          <Trash2 className="w-3 h-3" />
-                        </Button>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1">
+                        <Coins className="w-4 h-4 text-yellow-400" />
+                        <span className="font-orbitron font-bold text-yellow-400">{reward.cost}</span>
                       </div>
-                    )}
+                      <Badge variant="outline" className={getRarityColor(reward.rarity)}>
+                        {reward.rarity}
+                      </Badge>
+                    </div>
+                    
+                    <Button className="w-full mt-3 font-orbitron">
+                      {t('shop.buy')}
+                    </Button>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
+                ))}
+              </div>
 
-        <TabsContent value="powerups" className="mt-6">
-          <div className="grid gap-4">
-            {powerups.map(powerup => (
-              <Card key={powerup.id} className="glass relative">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        <span className="text-2xl">{powerup.icon}</span>
-                        <h4 className="font-orbitron font-bold text-lg">{powerup.name}</h4>
-                        <Badge variant="outline" className={getRarityColor(powerup.rarity)}>
-                          {t(`shop.rarity.${powerup.rarity.toLowerCase()}`)}
-                        </Badge>
-                        <Badge variant="outline" className="text-purple-400 border-purple-400/30">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {t('shop.weekly')}
-                        </Badge>
+              {/* Add Item Button - Moved to bottom */}
+              <div className="flex justify-center pt-4">
+                <Dialog open={isAddingReward} onOpenChange={(open) => {
+                  setIsAddingReward(open);
+                  if (!open) resetForm();
+                }}>
+                  <DialogTrigger asChild>
+                    <Button className="font-orbitron">
+                      <Plus className="w-4 h-4 mr-2" />
+                      + Tambah Item
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="glass">
+                    <DialogHeader>
+                      <DialogTitle className="font-orbitron">{t('shop.addReward')}</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div>
+                        <Label htmlFor="reward-name">{t('shop.form.name')}</Label>
+                        <Input
+                          id="reward-name"
+                          value={rewardForm.name}
+                          onChange={(e) => setRewardForm(prev => ({ ...prev, name: e.target.value }))}
+                          placeholder={t('shop.form.name')}
+                        />
                       </div>
-                      <p className="text-muted-foreground text-sm mb-3">{powerup.description}</p>
-                      <div className="flex items-center gap-4">
-                        <span className="text-yellow-400 font-orbitron font-bold">{powerup.price} {t('common.gold')}</span>
-                        <Button 
-                          className="font-orbitron"
-                          disabled={!canPurchase(powerup)}
-                          onClick={() => handlePurchase(powerup)}
-                        >
-                          <ShoppingCart className="w-4 h-4 mr-2" />
-                          {canPurchase(powerup) ? t('shop.buy') : t('shop.owned')}
+                      <div>
+                        <Label htmlFor="reward-desc">{t('shop.form.description')}</Label>
+                        <Textarea
+                          id="reward-desc"
+                          value={rewardForm.description}
+                          onChange={(e) => setRewardForm(prev => ({ ...prev, description: e.target.value }))}
+                          placeholder={t('shop.form.description')}
+                          rows={3}
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="reward-cost">{t('shop.form.cost')}</Label>
+                          <Input
+                            id="reward-cost"
+                            type="number"
+                            value={rewardForm.cost}
+                            onChange={(e) => setRewardForm(prev => ({ ...prev, cost: parseInt(e.target.value) || 0 }))}
+                            placeholder="0"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="reward-icon">{t('shop.form.icon')}</Label>
+                          <Input
+                            id="reward-icon"
+                            value={rewardForm.icon}
+                            onChange={(e) => setRewardForm(prev => ({ ...prev, icon: e.target.value }))}
+                            placeholder="🎁"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="reward-category">{t('shop.form.category')}</Label>
+                          <select 
+                            id="reward-category"
+                            value={rewardForm.category}
+                            onChange={(e) => setRewardForm(prev => ({ ...prev, category: e.target.value }))}
+                            className="w-full p-2 bg-background border border-border rounded-md"
+                          >
+                            <option value="entertainment">{t('shop.entertainment')}</option>
+                            <option value="food">{t('shop.food')}</option>
+                            <option value="education">{t('shop.education')}</option>
+                            <option value="lifestyle">{t('shop.lifestyle')}</option>
+                          </select>
+                        </div>
+                        <div>
+                          <Label htmlFor="reward-rarity">{t('shop.form.rarity')}</Label>
+                          <select 
+                            id="reward-rarity"
+                            value={rewardForm.rarity}
+                            onChange={(e) => setRewardForm(prev => ({ ...prev, rarity: e.target.value }))}
+                            className="w-full p-2 bg-background border border-border rounded-md"
+                          >
+                            <option value="common">Common</option>
+                            <option value="uncommon">Uncommon</option>
+                            <option value="rare">Rare</option>
+                            <option value="epic">Epic</option>
+                            <option value="legendary">Legendary</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button onClick={handleSaveReward} className="flex-1">
+                          {t('button.add')} {t('shop.reward')}
+                        </Button>
+                        <Button variant="outline" onClick={() => setIsAddingReward(false)}>
+                          {t('button.cancel')}
                         </Button>
                       </div>
                     </div>
-                    {powerup.canEdit && (
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" onClick={() => handleEditItem(powerup)}>
-                          <Edit2 className="w-3 h-3" />
-                        </Button>
-                        <Button size="sm" variant="destructive" onClick={() => handleDeleteItem(powerup.id, 'powerup')}>
-                          <Trash2 className="w-3 h-3" />
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+          </TabsContent>
+        ))}
       </Tabs>
     </div>
   );
